@@ -4,33 +4,33 @@ import {handRecipes} from "./recipes.js";
 let locations = ["Overworld"]
 let items = [];
 let tools = [
-    {
-        name: "Flint Pickaxe",
-        type: "pickaxe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Axe",
-        type: "axe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Shovel",
-        type: "shovel",
-        power: 0.2,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Saw",
-        type: "saw",
-        maxDurability: 20,
-        durability: 20
-    }
+    // {
+    //     name: "Flint Pickaxe",
+    //     type: "pickaxe",
+    //     power: 0.1,
+    //     maxDurability: 20,
+    //     durability: 20
+    // },
+    // {
+    //     name: "Flint Axe",
+    //     type: "axe",
+    //     power: 0.1,
+    //     maxDurability: 20,
+    //     durability: 20
+    // },
+    // {
+    //     name: "Flint Shovel",
+    //     type: "shovel",
+    //     power: 0.2,
+    //     maxDurability: 20,
+    //     durability: 20
+    // },
+    // {
+    //     name: "Flint Saw",
+    //     type: "saw",
+    //     maxDurability: 20,
+    //     durability: 20
+    // }
 ];
 let currentLocation = "overworld"
 let currentMaterial = {}
