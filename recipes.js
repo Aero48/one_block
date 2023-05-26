@@ -10,6 +10,7 @@ export let handRecipes = [
             name: "Grass Twine",
             amount: 1
         },
+        category: "normal",
         unlocked: false
     },
     {
@@ -23,6 +24,7 @@ export let handRecipes = [
             name: "Weak Tool Handle",
             amount: 1
         },
+        category: "normal",
         unlocked: false
     },
     {
@@ -44,6 +46,7 @@ export let handRecipes = [
             name: "Flint Pickaxe",
             group: "tool"
         },
+        category: "tool",
         unlocked: false
     },
     {
@@ -65,6 +68,7 @@ export let handRecipes = [
             name: "Flint Axe",
             group: "tool"
         },
+        category: "tool",
         unlocked: false
     },
     {
@@ -86,6 +90,7 @@ export let handRecipes = [
             name: "Flint Shovel",
             group: "tool"
         },
+        category: "tool",
         unlocked: false
     },
     {
@@ -107,6 +112,7 @@ export let handRecipes = [
             name: "Flint Saw",
             group: "tool"
         },
+        category: "tool",
         unlocked: false
     },
     {
@@ -124,6 +130,7 @@ export let handRecipes = [
             name: "Oak Plank",
             amount: 3
         },
+        category: "sawing",
         unlocked: false
     },
     {
@@ -137,6 +144,7 @@ export let handRecipes = [
             name: "Grass Mesh",
             amount: 1
         },
+        category: "normal",
         unlocked: false
     },
     {
@@ -158,6 +166,7 @@ export let handRecipes = [
             name: "Primitive Sieve",
             group: "tool"
         },
+        category: "tool",
         unlocked: false
     },
 ]

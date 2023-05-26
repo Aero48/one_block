@@ -60,7 +60,9 @@ let tools = [
     // }
 ];
 let currentLocation = "overworld"
-let currentMaterial = {}
+let currentMaterial = {};
+
+let recipeTab = "all";
 
 let baseMiningSpeed = 5000;
 let isMining = false;
@@ -174,35 +176,40 @@ function updateRecipes(){
     })
 
     // Handles the display of unlocked recipes
+    console.log(recipeTab);
     unlockedRecipes.forEach(recipe=>{
-        let recipeString = "";
-        recipe.inputs.forEach(input=>{
+        
+        if (recipe.category == recipeTab || recipeTab == "all"){
+            let recipeString = "";
+            recipe.inputs.forEach(input=>{
+                itemList.forEach(itemEl => {
+                    if (itemEl.name == input.name){
+                        recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                    }
+                })
+            })
+            recipeString += " --> "
             itemList.forEach(itemEl => {
-                if (itemEl.name == input.name){
-                    recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                if (itemEl.name == recipe.output.name){
+                    recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' >"
                 }
             })
-        })
-        recipeString += " --> "
-        itemList.forEach(itemEl => {
-            if (itemEl.name == recipe.output.name){
-                recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' >"
+            toolList.forEach(toolEl => {
+                if (toolEl.name == recipe.output.name){
+                    recipeString += "<div class='item-icn'><img src='"+toolEl.image+"' style='"+toolEl.color+"' >"
+                }
+            })
+            if (recipe.output.amount != null){
+                recipeString += "<p class='item-icn-amount'>"+recipe.output.amount+"</p></div>"
+            }else{
+                recipeString += "</div>"
             }
-        })
-        toolList.forEach(toolEl => {
-            if (toolEl.name == recipe.output.name){
-                recipeString += "<div class='item-icn'><img src='"+toolEl.image+"' style='"+toolEl.color+"' >"
+            if (itemCheck(recipe.inputs)){
+                recipeString += " <button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
             }
-        })
-        if (recipe.output.amount != null){
-            recipeString += "<p class='item-icn-amount'>"+recipe.output.amount+"</p></div>"
-        }else{
-            recipeString += "</div>"
+            $("#recipes-body").append("<tr><td>"+ recipeString +"</td></tr>")
         }
-        if (itemCheck(recipe.inputs)){
-            recipeString += " <button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
-        }
-        $("#recipes-body").append("<tr><td>"+ recipeString +"</td></tr>")
+        
     })
 
     // Handles the craft button click listeners
@@ -410,6 +417,12 @@ function sieveClick(){
     }
 }
 
+function recipeTabClick(tab){
+    recipeTab = tab;
+    updateRecipes();
+
+}
+
 function sieveListener(){
     $("#sieve").click(function(){
         sieveClick();
@@ -420,7 +433,12 @@ function clickListeners(){
     $("#block").click(function(){
         blockClick();  
     })
-
+    
+    $(".recipe-tab a").click(function(){
+        recipeTabClick(this.dataset.recipetab);
+        $(".recipe-tab a").removeClass("active")
+        $(this).addClass("active")
+    })
     
 }
 
