@@ -43,6 +43,23 @@ let tools = [
     //     maxDurability: 20,
     //     durability: 20
     // },
+    {
+        name: "Flint Axe",
+        image: "images/axe-tool-construction-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        type: "axe",
+        power: 0.1,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Saw",
+        image: "images/saw-illustration-1-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        type: "saw",
+        maxDurability: 20,
+        durability: 20
+    },
     // {
     //     name: "Flint Saw",
     //     type: "saw",
@@ -110,14 +127,13 @@ function updateInventory(){
     items.forEach(item => {
         itemList.forEach(itemEl => {
             if (item.name == itemEl.name){
-                $("#items-body").append("<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+item.amount+"</p></div>")
+                $("#items-body").append("<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+item.amount+"</p></div>")
             }
         })
-        //$("#items-body").append("<tr><td>"+item.amount+ "x "+ item.name +"</td></tr>")
     })
     tools.forEach(tool => {
         
-        $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% <div class='item-icn'><img src='"+tool.image+"' style='"+tool.color+"' ></div></td></tr>")
+        $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% <div class='item-icn' title='"+tool.name+"'><img src='"+tool.image+"' style='"+tool.color+"' ></div></td></tr>")
     })
 
     $("#sieve-container").html("")
@@ -184,19 +200,24 @@ function updateRecipes(){
             recipe.inputs.forEach(input=>{
                 itemList.forEach(itemEl => {
                     if (itemEl.name == input.name){
-                        recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                        recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                    }
+                })
+                toolList.forEach(toolEl => {
+                    if (toolEl.name == input.name){
+                        recipeString += "<div class='item-icn' title='"+toolEl.name+"'><img src='"+toolEl.image+"' style='"+toolEl.color+"' ></div>"
                     }
                 })
             })
             recipeString += " --> "
             itemList.forEach(itemEl => {
                 if (itemEl.name == recipe.output.name){
-                    recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' >"
+                    recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' >"
                 }
             })
             toolList.forEach(toolEl => {
                 if (toolEl.name == recipe.output.name){
-                    recipeString += "<div class='item-icn'><img src='"+toolEl.image+"' style='"+toolEl.color+"' >"
+                    recipeString += "<div class='item-icn' title='"+toolEl.name+"'><img src='"+toolEl.image+"' style='"+toolEl.color+"' >"
                 }
             })
             if (recipe.output.amount != null){
