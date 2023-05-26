@@ -19,18 +19,7 @@ let items = [
     //     amount: 500
     // }
 ];
-let tools = [
-    {
-        name: "Primitive Sieve",
-        image: "images/table-svgrepo-com.svg",
-        color: "filter: invert(35%) sepia(42%) saturate(858%) hue-rotate(2deg) brightness(92%) contrast(89%);",
-        group: "tool",
-        type: "sieve",
-        power: 1,
-        maxDurability: 10,
-        durability: 10
-    }
-];
+let tools = [];
 let currentLocation = "overworld"
 let currentMaterial = {};
 
