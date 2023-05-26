@@ -259,12 +259,6 @@ function blockDisplay(){
     }else{
         $("#block").removeClass("btn-danger").addClass("btn-primary");
     }
-    // if (currentMaterial.toolRequired){
-    //     console.log("test");
-        
-    // }else{
-    //     $(".required-tool").html("");
-    // }
     switch(currentMaterial.tool){
         case "pickaxe":
             $(".required-tool").html("<img src='images/pickaxe-svgrepo-com.svg'>");
@@ -280,7 +274,6 @@ function blockDisplay(){
             break;
         default:
             $(".required-tool").html("");
-        
     }
     
 }
