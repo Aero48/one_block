@@ -142,7 +142,7 @@ export let overworldMaterials = [
     },
     {
         name: "Clay",
-        weight: 30,
+        weight: 20,
         hardness: 0.5,
         tool: "shovel",
         toolRequired: false,

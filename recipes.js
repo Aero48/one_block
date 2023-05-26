@@ -141,4 +141,42 @@ export let handRecipes = [
         },
         unlocked: false
     },
+    {
+        inputs: [
+            {
+                name: "Grass Twine",
+                amount: 4
+            }
+        ],
+        output: {
+            name: "Grass Mesh",
+            amount: 1
+        },
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
+                name: "Grass Mesh",
+                amount: 1
+            },
+            {
+                name: "Oak Plank",
+                amount: 4
+            },
+            {
+                name: "Stick",
+                amount: 4
+            }
+        ],
+        output: {
+            name: "Primitive Sieve",
+            group: "tool",
+            type: "sieve",
+            power: 1,
+            maxDurability: 10,
+            durability: 10
+        },
+        unlocked: false
+    },
 ]

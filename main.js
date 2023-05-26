@@ -1,35 +1,50 @@
 import {overworldMaterials} from "./materials.js";
 import {handRecipes} from "./recipes.js";
+import {sieveRecipes} from "./sieve.js";
 
-let locations = ["Overworld"]
-let items = [];
+let locations = ["overworld"]
+let items = [
+    {
+        name: "Gravel",
+        amount: 50
+    }
+];
 let tools = [
+    {
+        name: "Flint Pickaxe",
+        type: "pickaxe",
+        power: 0.1,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Axe",
+        type: "axe",
+        power: 0.1,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Shovel",
+        type: "shovel",
+        power: 0.2,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Saw",
+        type: "saw",
+        maxDurability: 20,
+        durability: 20
+    }
     // {
-    //     name: "Flint Pickaxe",
-    //     type: "pickaxe",
-    //     power: 0.1,
-    //     maxDurability: 20,
-    //     durability: 20
-    // },
-    // {
-    //     name: "Flint Axe",
-    //     type: "axe",
-    //     power: 0.1,
-    //     maxDurability: 20,
-    //     durability: 20
-    // },
-    // {
-    //     name: "Flint Shovel",
-    //     type: "shovel",
-    //     power: 0.2,
-    //     maxDurability: 20,
-    //     durability: 20
-    // },
-    // {
-    //     name: "Flint Saw",
-    //     type: "saw",
-    //     maxDurability: 20,
-    //     durability: 20
+    //     name: "Primitive Sieve",
+    //         amount: 1,
+    //         group: "tool",
+    //         type: "sieve",
+    //         power: 1,
+    //         maxDurability: 10,
+    //         durability: 10
     // }
 ];
 let currentLocation = "overworld"
@@ -37,6 +52,7 @@ let currentMaterial = {}
 
 let baseMiningSpeed = 5000;
 let isMining = false;
+let isSifting = false;
 let maxHunger = 20;
 
 // Handles the loot tables
@@ -84,6 +100,18 @@ function updateInventory(){
         
         $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% "+tool.name +"</td></tr>")
     })
+
+    $("#sieve-container").html("")
+    if (findFastestTool("sieve").power > 0){
+        $("#sieve-container").html("<button id='sieve' class='btn btn-primary'></button>")
+        $( "#sieve" ).html(findFastestTool("sieve").name)
+        sieveListener();
+    }
+    // if (findFastestTool("sieve").power > 0 && itemCheck({name: "Gravel", amount: 1}) && !isSifting){
+    //     $( "#sieve" ).prop( "disabled", false );
+    // }else{
+    //     $( "#sieve" ).prop( "disabled", true );
+    // }
     updateRecipes()
 }
 
@@ -145,7 +173,11 @@ function updateRecipes(){
             inputIndex ++;
             
         })
-        recipeString += " --> " + recipe.output.amount + "x " + recipe.output.name;
+        recipeString += " --> "
+        if (recipe.output.amount != null){
+            recipeString += recipe.output.amount + "x "
+        }
+        recipeString += recipe.output.name;
         if (itemCheck(recipe.inputs)){
             recipeString += " <button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
         }
@@ -307,6 +339,20 @@ function blockMine(){
     randomBlock(currentLocation);
 }
 
+function sieveComplete(){
+    isSifting = false;
+    $("#sieve").html("")
+    $( "#sieve" ).prop( "disabled", false );
+
+    sieveRecipes.forEach(recipe =>{
+        if (findFastestTool("sieve").power == recipe.power){
+            findFastestTool("sieve").durability-=1;
+            checkToolDurability();
+            processLoot(recipe);
+        }
+    })
+}
+
 // When block button is clicked, mine the block (assuming you aren't already mining one)
 function blockClick(){
     if(!isMining){
@@ -320,10 +366,28 @@ function blockClick(){
     
 }
 
+function sieveClick(){
+    if(!isSifting && findFastestTool("sieve").power > 0 && itemCheck([{name: "Gravel", amount: 1}])){
+        isSifting = true;
+        removeItem("Gravel", 1)
+        $("#sieve").html("<div class='spinner-border text-light'></div>")
+        $( "#sieve" ).prop( "disabled", true );
+        setTimeout(sieveComplete, 5000);
+    }
+}
+
+function sieveListener(){
+    $("#sieve").click(function(){
+        sieveClick();
+    })
+}
+
 function clickListeners(){
     $("#block").click(function(){
         blockClick();  
     })
+
+    
 }
 
 $(document).ready(function(){
