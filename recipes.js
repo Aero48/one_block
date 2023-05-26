@@ -105,6 +105,28 @@ export let handRecipes = [
             },
             {
                 name: "Flint",
+                amount: 1
+            }
+        ],
+        output: {
+            name: "Flint Sickle",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
+                name: "Weak Tool Handle",
+                amount: 1
+            },
+            {
+                name: "Grass Twine",
+                amount: 1
+            },
+            {
+                name: "Flint",
                 amount: 4
             }
         ],

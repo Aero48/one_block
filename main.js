@@ -259,6 +259,30 @@ function blockDisplay(){
     }else{
         $("#block").removeClass("btn-danger").addClass("btn-primary");
     }
+    // if (currentMaterial.toolRequired){
+    //     console.log("test");
+        
+    // }else{
+    //     $(".required-tool").html("");
+    // }
+    switch(currentMaterial.tool){
+        case "pickaxe":
+            $(".required-tool").html("<img src='images/pickaxe-svgrepo-com.svg'>");
+            break;
+        case "axe":
+            $(".required-tool").html("<img src='images/axe-tool-construction-svgrepo-com.svg'>");
+            break;
+        case "shovel":
+            $(".required-tool").html("<img src='images/shovel-svgrepo-com.svg'>");
+            break;
+        case "sickle":
+            $(".required-tool").html("<img src='images/sickle-svgrepo-com.svg'>");
+            break;
+        default:
+            $(".required-tool").html("");
+        
+    }
+    
 }
 
 // Selects a random block

@@ -99,6 +99,16 @@ export let toolList = [
         durability: 20
     },
     {
+        name: "Flint Sickle",
+        image: "images/sickle-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        group: "tool",
+        type: "sickle",
+        power: 0.2,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
         name: "Flint Saw",
         image: "images/saw-illustration-1-svgrepo-com.svg",
         color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",

@@ -46,7 +46,12 @@
 
 .task-content {
     display:flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
     margin-bottom: 30px;
+}
+
+.mining-tool{
+    display:flex;
+    align-items: center;
+    gap: 10px;
 }
