@@ -14,14 +14,26 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col">
-                <button id="block" class="btn btn-primary"></button>
-                <div id="sieve-container">
-                    <!-- <button id="sieve" class="btn btn-primary"></button> -->
+            <div class="col-md-2">
+                <strong id="items-heading">Mining</strong>
+                <hr>
+                <div class="task-content">
+                    
+                    <button id="block" class="btn btn-primary"></button>
+                    
+                </div>
+                <strong id="items-heading">Sifting</strong>
+                <hr>
+                <div class="task-content">
+                    <div id="sieve-container">
+                        
+                    </div>
                 </div>
                 
+                
+                
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 <div id="inventory-list">
                     <div id="items-table">
                         <strong id="items-heading">Items</strong>
@@ -44,46 +56,36 @@
                     
                 </div>
             </div>
-            <div class="col">
+            <div class="col-md-4">
                 <div class="crafting-hand">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item recipe-tab" >
-                            <a href="#" class="nav-link active" data-recipeTab="all">All</a>
-                        </li>
-                        <li class="nav-item recipe-tab" >
-                            <a href="#" class="nav-link" data-recipeTab="normal">Normal</a>
-                        </li>
-                        <li class="nav-item recipe-tab" >
-                            <a href="#" class="nav-link" data-recipeTab="tool">Tool</a>
-                        </li>
-                        <li class="nav-item recipe-tab" >
-                            <a href="#" class="nav-link" data-recipeTab="sawing">Sawing</a>
-                        </li>
-                    </ul>
+                    
                     
                     <table class="table" id="recipes-table">
                         <thead>
                             <tr>
                                 <th id="recipes-heading">Recipes</th>
-                                
-                                <!-- <button class="btn btn-primary recipe-tab" data-recipe-tab="all">All</button>
-                                <button class="btn btn-primary recipe-tab" data-recipe-tab="normal">Normal</button>
-                                <button class="btn btn-primary recipe-tab" data-recipe-tab="tool">Tool</button>
-                                <button class="btn btn-primary recipe-tab" data-recipe-tab="sawing">Sawing</button> -->
                             </tr>
                         </thead>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item recipe-tab" >
+                                <a href="#" class="nav-link active" data-recipeTab="all">All</a>
+                            </li>
+                            <li class="nav-item recipe-tab" >
+                                <a href="#" class="nav-link" data-recipeTab="normal">Normal</a>
+                            </li>
+                            <li class="nav-item recipe-tab" >
+                                <a href="#" class="nav-link" data-recipeTab="tool">Tool</a>
+                            </li>
+                            <li class="nav-item recipe-tab" >
+                                <a href="#" class="nav-link" data-recipeTab="sawing">Sawing</a>
+                            </li>
+                        </ul>
                             <tbody id=recipes-body></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <!-- <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    </script> -->
     <script src="lib/jquery-3.7.0.min.js"></script>
     <script src="main.js" type="module"></script>
     <script src="materials.js" type="module"></script>

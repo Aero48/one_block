@@ -20,61 +20,16 @@ let items = [
     // }
 ];
 let tools = [
-    // {
-    //     name: "Flint Pickaxe",
-    //     type: "pickaxe",
-    //     power: 0.1,
-    //     maxDurability: 20,
-    //     durability: 20
-    // },
-    // {
-    //     name: "Flint Axe",
-    //     type: "axe",
-    //     power: 0.1,
-    //     maxDurability: 20,
-    //     durability: 20
-    // },
-    // {
-    //     name: "Flint Shovel",
-    //     image: "images/shovel-svgrepo-com.svg",
-    //     color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-    //     type: "shovel",
-    //     power: 0.2,
-    //     maxDurability: 20,
-    //     durability: 20
-    // },
     {
-        name: "Flint Axe",
-        image: "images/axe-tool-construction-svgrepo-com.svg",
-        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-        type: "axe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Saw",
-        image: "images/saw-illustration-1-svgrepo-com.svg",
-        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-        type: "saw",
-        maxDurability: 20,
-        durability: 20
-    },
-    // {
-    //     name: "Flint Saw",
-    //     type: "saw",
-    //     maxDurability: 20,
-    //     durability: 20
-    // }
-    // {
-    //     name: "Primitive Sieve",
-    //         amount: 1,
-    //         group: "tool",
-    //         type: "sieve",
-    //         power: 1,
-    //         maxDurability: 10,
-    //         durability: 10
-    // }
+        name: "Primitive Sieve",
+        image: "images/table-svgrepo-com.svg",
+        color: "filter: invert(35%) sepia(42%) saturate(858%) hue-rotate(2deg) brightness(92%) contrast(89%);",
+        group: "tool",
+        type: "sieve",
+        power: 1,
+        maxDurability: 10,
+        durability: 10
+    }
 ];
 let currentLocation = "overworld"
 let currentMaterial = {};
@@ -287,7 +242,7 @@ function collectItem(itemStack){
     if (itemStack.group == "tool"){
         toolList.forEach(toolEl => {
             if (itemStack.name == toolEl.name){
-                tools.push({name: toolEl.name, image: toolEl.image, color: toolEl.color, type: toolEl.type, power: toolEl.power, maxDurability: toolEl.maxDurability, durability:toolEl.maxDurability})
+                tools.push({name: toolEl.name, image: toolEl.image, color: toolEl.color, group: toolEl.group, type: toolEl.type, power: toolEl.power, maxDurability: toolEl.maxDurability, durability:toolEl.maxDurability})
             }
         })
     }else{
