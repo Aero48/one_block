@@ -21,14 +21,14 @@ export let overworldMaterials = [
     },
     {
         name: "Gravel",
-        weight: 50,
+        weight: 60,
         hardness: 0.75,
         tool: "shovel",
         toolRequired: false,
         drops: {
             pools: [
                 {
-                    poolWeight: 2,
+                    poolWeight: 1,
                     poolItems: [
                         {
                             name: "Gravel",
@@ -38,7 +38,6 @@ export let overworldMaterials = [
                 },
                 {
                     poolWeight: 1,
-                    toolBonus: 50,
                     poolItems: [
                         {
                             name: "Flint",
@@ -71,7 +70,7 @@ export let overworldMaterials = [
     },
     {
         name: "Oak Log",
-        weight: 30,
+        weight: 20,
         hardness: 1,
         tool: "axe",
         toolRequired: true,
@@ -91,7 +90,7 @@ export let overworldMaterials = [
     },
     {
         name: "Grass",
-        weight: 30,
+        weight: 40,
         hardness: 0.25,
         tool: "sickle",
         toolRequired: false,
@@ -112,7 +111,7 @@ export let overworldMaterials = [
     },
     {
         name: "Leaves",
-        weight: 30,
+        weight: 40,
         hardness: 0.25,
         tool: "sickle",
         toolRequired: false,
@@ -145,7 +144,7 @@ export let overworldMaterials = [
         weight: 20,
         hardness: 0.5,
         tool: "shovel",
-        toolRequired: false,
+        toolRequired: true,
         drops: {
             pools: [
                 {

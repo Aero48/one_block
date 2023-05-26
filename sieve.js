@@ -8,7 +8,7 @@ export let sieveRecipes = [
                     poolItems: [
                         {
                             name: "Flint",
-                            minAmount: 1,
+                            minAmount: 0,
                             maxAmount: 2,
                         }
                     ]

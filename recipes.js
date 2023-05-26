@@ -42,11 +42,7 @@ export let handRecipes = [
         ],
         output: {
             name: "Flint Pickaxe",
-            group: "tool",
-            type: "pickaxe",
-            power: 0.1,
-            maxDurability: 20,
-            durability: 20
+            group: "tool"
         },
         unlocked: false
     },
@@ -67,11 +63,7 @@ export let handRecipes = [
         ],
         output: {
             name: "Flint Axe",
-            group: "tool",
-            type: "axe",
-            power: 0.1,
-            maxDurability: 20,
-            durability: 20
+            group: "tool"
         },
         unlocked: false
     },
@@ -92,11 +84,7 @@ export let handRecipes = [
         ],
         output: {
             name: "Flint Shovel",
-            group: "tool",
-            type: "shovel",
-            power: 0.2,
-            maxDurability: 20,
-            durability: 20
+            group: "tool"
         },
         unlocked: false
     },
@@ -117,10 +105,7 @@ export let handRecipes = [
         ],
         output: {
             name: "Flint Saw",
-            group: "tool",
-            type: "saw",
-            maxDurability: 20,
-            durability: 20
+            group: "tool"
         },
         unlocked: false
     },
@@ -171,11 +156,7 @@ export let handRecipes = [
         ],
         output: {
             name: "Primitive Sieve",
-            group: "tool",
-            type: "sieve",
-            power: 1,
-            maxDurability: 10,
-            durability: 10
+            group: "tool"
         },
         unlocked: false
     },

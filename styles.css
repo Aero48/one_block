@@ -7,3 +7,39 @@
     width: 100px;
     height: 75px;
 }
+
+#items-body {
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.item-icn {
+    width: 50px;
+    height: 50px;
+}
+
+.item-icn img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    
+}
+
+.item-icn p {
+    position: relative;
+    bottom: 18px;
+    left: 0px;
+    text-align: right;
+}
+
+#tools-body td{
+    display: flex;
+    align-items: center;
+}
+
+#recipes-body tr td {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

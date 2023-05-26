@@ -1,42 +1,54 @@
+import {itemList} from "./items.js";
+import {toolList} from "./items.js";
 import {overworldMaterials} from "./materials.js";
 import {handRecipes} from "./recipes.js";
 import {sieveRecipes} from "./sieve.js";
 
 let locations = ["overworld"]
 let items = [
-    {
-        name: "Gravel",
-        amount: 50
-    }
+    // {
+    //     name: "Flint",
+    //     amount: 500
+    // },
+    // {
+    //     name: "Grass Twine",
+    //     amount: 500
+    // },
+    // {
+    //     name: "Weak Tool Handle",
+    //     amount: 500
+    // }
 ];
 let tools = [
-    {
-        name: "Flint Pickaxe",
-        type: "pickaxe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Axe",
-        type: "axe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Shovel",
-        type: "shovel",
-        power: 0.2,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Saw",
-        type: "saw",
-        maxDurability: 20,
-        durability: 20
-    }
+    // {
+    //     name: "Flint Pickaxe",
+    //     type: "pickaxe",
+    //     power: 0.1,
+    //     maxDurability: 20,
+    //     durability: 20
+    // },
+    // {
+    //     name: "Flint Axe",
+    //     type: "axe",
+    //     power: 0.1,
+    //     maxDurability: 20,
+    //     durability: 20
+    // },
+    // {
+    //     name: "Flint Shovel",
+    //     image: "images/shovel-svgrepo-com.svg",
+    //     color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+    //     type: "shovel",
+    //     power: 0.2,
+    //     maxDurability: 20,
+    //     durability: 20
+    // },
+    // {
+    //     name: "Flint Saw",
+    //     type: "saw",
+    //     maxDurability: 20,
+    //     durability: 20
+    // }
     // {
     //     name: "Primitive Sieve",
     //         amount: 1,
@@ -94,11 +106,16 @@ function updateInventory(){
     $("#items-body").html("");
     $("#tools-body").html("");
     items.forEach(item => {
-        $("#items-body").append("<tr><td>"+item.amount+ "x "+ item.name +"</td></tr>")
+        itemList.forEach(itemEl => {
+            if (item.name == itemEl.name){
+                $("#items-body").append("<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+item.amount+"</p></div>")
+            }
+        })
+        //$("#items-body").append("<tr><td>"+item.amount+ "x "+ item.name +"</td></tr>")
     })
     tools.forEach(tool => {
         
-        $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% "+tool.name +"</td></tr>")
+        $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% <div class='item-icn'><img src='"+tool.image+"' style='"+tool.color+"' ></div></td></tr>")
     })
 
     $("#sieve-container").html("")
@@ -107,11 +124,7 @@ function updateInventory(){
         $( "#sieve" ).html(findFastestTool("sieve").name)
         sieveListener();
     }
-    // if (findFastestTool("sieve").power > 0 && itemCheck({name: "Gravel", amount: 1}) && !isSifting){
-    //     $( "#sieve" ).prop( "disabled", false );
-    // }else{
-    //     $( "#sieve" ).prop( "disabled", true );
-    // }
+    
     updateRecipes()
 }
 
@@ -162,22 +175,30 @@ function updateRecipes(){
 
     // Handles the display of unlocked recipes
     unlockedRecipes.forEach(recipe=>{
-        let recipeString = ""
-        let inputIndex = 0;
+        let recipeString = "";
         recipe.inputs.forEach(input=>{
-            if (inputIndex >0){
-                recipeString += ", " + input.amount+ "x "+ input.name;
-            }else{
-                recipeString += input.amount+ "x "+ input.name;
-            }
-            inputIndex ++;
-            
+            itemList.forEach(itemEl => {
+                if (itemEl.name == input.name){
+                    recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                }
+            })
         })
         recipeString += " --> "
+        itemList.forEach(itemEl => {
+            if (itemEl.name == recipe.output.name){
+                recipeString += "<div class='item-icn'><img src='"+itemEl.image+"' style='"+itemEl.color+"' >"
+            }
+        })
+        toolList.forEach(toolEl => {
+            if (toolEl.name == recipe.output.name){
+                recipeString += "<div class='item-icn'><img src='"+toolEl.image+"' style='"+toolEl.color+"' >"
+            }
+        })
         if (recipe.output.amount != null){
-            recipeString += recipe.output.amount + "x "
+            recipeString += "<p class='item-icn-amount'>"+recipe.output.amount+"</p></div>"
+        }else{
+            recipeString += "</div>"
         }
-        recipeString += recipe.output.name;
         if (itemCheck(recipe.inputs)){
             recipeString += " <button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
         }
@@ -236,7 +257,11 @@ function craft(id){
 function collectItem(itemStack){
     let alreadyObtained = false;
     if (itemStack.group == "tool"){
-        tools.push(itemStack)
+        toolList.forEach(toolEl => {
+            if (itemStack.name == toolEl.name){
+                tools.push({name: toolEl.name, image: toolEl.image, color: toolEl.color, type: toolEl.type, power: toolEl.power, maxDurability: toolEl.maxDurability, durability:toolEl.maxDurability})
+            }
+        })
     }else{
         items.forEach(item => {
             if (itemStack.name == item.name){
@@ -292,13 +317,20 @@ function findFastestTool(type){
         type: "none",
         power: 0,
     };
-    tools.forEach(tool=>{
-        if (tool.type == type && tool.power>currentTool.power){
-            currentTool = tool;
+    for(let i = 0; i<tools.length; i++){
+        if (tools[i].type == type && tools[i].power>currentTool.power){
+            currentTool = tools[i];
         }
-    })
+    }
+    // tools.forEach(tool=>{
+    //     if (tool.type == type && tool.power>currentTool.power){
+    //         currentTool = tool;
+    //     }
+    // })
     return currentTool;
 }
+
+
 
 // Determines how fast to break the current block
 function miningSpeedCalc(){
@@ -307,6 +339,7 @@ function miningSpeedCalc(){
         miningSpeed *=2; 
     }else{
         miningSpeed -= findFastestTool(currentMaterial.tool).power*miningSpeed;
+        
     }
     return miningSpeed;
 }
@@ -331,6 +364,7 @@ function blockMine(){
     // If a specific tool isn't required or the current tool matches the required tool, give the proper loot
     if((!currentMaterial.toolRequired || (currentMaterial.tool == findFastestTool(currentMaterial.tool).type))){
         findFastestTool(currentMaterial.tool).durability-=1;
+        console.log(toolList[2].durability)
         checkToolDurability();
         processLoot(currentMaterial);
     }
@@ -394,4 +428,5 @@ $(document).ready(function(){
     randomBlock(currentLocation);
     updateInventory();
     clickListeners();
+    //$(".container").append("<img src='"+ itemList[0].image +"' style='"+itemList[0].color+"'></img>")
 });
