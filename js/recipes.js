@@ -191,4 +191,22 @@ export const handRecipes = [
         category: "tool",
         unlocked: false
     },
+    {
+        inputs: [
+            {
+                name: "Cobblestone",
+                amount: 8
+            },
+            {
+                name: "Oak Log",
+                amount: 2
+            }
+        ],
+        output: {
+            name: "Stone Furnace",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    }
 ]

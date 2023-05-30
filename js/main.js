@@ -17,17 +17,87 @@ const items = [
     //     name: "Weak Tool Handle",
     //     amount: 500
     // }
+    {
+        name: "Cobblestone",
+        amount: 10
+    },
+    {
+        name: "Oak Log",
+        amount: 10
+    },
 ];
 const tools = [
+    {
+        name: "Primitive Sieve",
+        image: "../images/table-svgrepo-com.svg",
+        color: "filter: invert(35%) sepia(42%) saturate(858%) hue-rotate(2deg) brightness(92%) contrast(89%);",
+        group: "tool",
+        type: "sieve",
+        power: 1,
+        maxDurability: 2,
+        durability: 2
+    },
+    {
+        name: "Flint Pickaxe",
+        image: "../images/pickaxe-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        group: "tool",
+        type: "pickaxe",
+        power: 0.1,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Axe",
+        image: "../images/axe-tool-construction-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        group: "tool",
+        type: "axe",
+        power: 0.1,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Shovel",
+        image: "../images/shovel-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        group: "tool",
+        type: "shovel",
+        power: 0.2,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Flint Sickle",
+        image: "../images/sickle-svgrepo-com.svg",
+        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
+        group: "tool",
+        type: "sickle",
+        power: 0.2,
+        maxDurability: 20,
+        durability: 20
+    },
 ];
 let currentLocation = "overworld"
 let currentMaterial = {};
+
+let furnaceTemp = 0;
+let furnaceMaxTemp = 10000;
+
+let selectedItem = {};
 
 let recipeTab = "all";
 
 let baseMiningSpeed = 5000;
 let isMining = false;
 let isSifting = false;
+let itemSelected = false;
+
+let dragItem = document.getElementById('drag-item');const onMouseMove = (e) =>{
+    dragItem.style.left = e.pageX + 'px';
+    dragItem.style.top = e.pageY + 'px';
+  }
+document.addEventListener('mousemove', onMouseMove);
 
 // Handles the loot tables
 function processLoot(material){
@@ -62,14 +132,50 @@ function processLoot(material){
     }
 }
 
+function findItemIcon(inputItem){
+    let outputImage = "";
+    itemList.forEach((item, index) => {
+        if (inputItem.name == item.name){
+            outputImage = item.image
+            
+        }
+    })
+    return outputImage;
+}
+
+function findItemColor(inputItem){
+    let outputColor = "";
+    itemList.forEach((item, index) => {
+        if (inputItem.name == item.name){
+            outputColor = item.color
+            
+        }
+    })
+    return outputColor;
+}
+
+function itemClickListeners(){
+    
+    $("#items-body .item-icn").off("click");
+    $("#items-body .item-icn").click(function(){
+        if (!itemSelected){
+            itemSelected = true;
+            selectedItem = {name: items[this.dataset.index].name, amount: items[this.dataset.index].amount, image:items[this.dataset.index].image, color:items[this.dataset.index].color}
+            $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+findItemIcon(selectedItem)+"' style='"+findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+selectedItem.amount+"</p></div>")
+            removeItem(selectedItem.name, selectedItem.amount);
+            $("#add-selected-item").prop( "disabled", false )
+        }
+    })
+}
+
 // Refreshes the view of the inventory
 function updateInventory(){
     $("#items-body").html("");
     $("#tools-body").html("");
-    items.forEach(item => {
+    items.forEach((item,index) => {
         itemList.forEach(itemEl => {
             if (item.name == itemEl.name){
-                $("#items-body").append("<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+item.amount+"</p></div>")
+                $("#items-body").append("<div class='item-icn' title='"+itemEl.name+"' data-index='"+index+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+item.amount+"</p></div>")
             }
         })
     })
@@ -83,7 +189,8 @@ function updateInventory(){
         $( "#sieve" ).html(findFastestTool("sieve").name)
         sieveListener();
     }
-    updateRecipes()
+    updateRecipes();
+    itemClickListeners();
 }
 
 // Tests to see if a recipe has all required ingredients
@@ -402,6 +509,19 @@ function sieveListener(){
     })
 }
 
+function addSelectedListener(){
+    $("#add-selected-item").click(function(){
+        if (itemSelected){
+            collectItem({name: selectedItem.name, amount: selectedItem.amount})
+            itemSelected = false;
+            selectedItem = {};
+            console.log("item deposited")
+            $("#drag-item").html("");
+            $("#add-selected-item").prop( "disabled", true )
+        }
+    })
+}
+
 function clickListeners(){
     $("#block").click(function(){
         blockClick();  
@@ -412,6 +532,8 @@ function clickListeners(){
         $(".recipe-tab a").removeClass("active")
         $(this).addClass("active")
     })
+
+    addSelectedListener();
     
 }
 

@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
 </head>
 <body>
+    <div id="drag-item" >
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -43,8 +45,11 @@
                         <strong id="items-heading">Items</strong>
                         <hr>
                         <div id=items-body>
-
+                            
                         </div>
+                        <button id="add-selected-item" class="btn btn-success" disabled>
+                            +
+                        </button>
                     </div>
                     <table class="table" id="tools-table">
                         <thead>
@@ -96,6 +101,7 @@
     <script src="./js/recipes.js" type="module"></script>
     <script src="./js/sieve.js" type="module"></script>
     <script src="./js/items.js" type="module"></script>
+    <script src="./js/fuel.js" type="module"></script>
     
 </body>
 </html>
