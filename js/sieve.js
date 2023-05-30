@@ -1,4 +1,4 @@
-export let sieveRecipes = [
+export const sieveRecipes = [
     {
         power: 1,
         drops: {

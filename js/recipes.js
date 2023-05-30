@@ -1,4 +1,4 @@
-export let handRecipes = [
+export const handRecipes = [
     {
         inputs: [
             {

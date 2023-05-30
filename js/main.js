@@ -1,11 +1,10 @@
 import {itemList} from "./items.js";
 import {toolList} from "./items.js";
-import {overworldMaterials} from "./materials.js";
+import {materials} from "./materials.js";
 import {handRecipes} from "./recipes.js";
 import {sieveRecipes} from "./sieve.js";
 
-let locations = ["overworld"]
-let items = [
+const items = [
     // {
     //     name: "Flint",
     //     amount: 500
@@ -19,7 +18,8 @@ let items = [
     //     amount: 500
     // }
 ];
-let tools = [];
+const tools = [
+];
 let currentLocation = "overworld"
 let currentMaterial = {};
 
@@ -28,7 +28,6 @@ let recipeTab = "all";
 let baseMiningSpeed = 5000;
 let isMining = false;
 let isSifting = false;
-let maxHunger = 20;
 
 // Handles the loot tables
 function processLoot(material){
@@ -57,7 +56,6 @@ function processLoot(material){
                 
             })
             break;
-           
         }else{
             randomNum -= material.drops.pools[i].poolWeight;
         }
@@ -76,7 +74,6 @@ function updateInventory(){
         })
     })
     tools.forEach(tool => {
-        
         $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% <div class='item-icn' title='"+tool.name+"'><img src='"+tool.image+"' style='"+tool.color+"' ></div></td></tr>")
     })
 
@@ -86,7 +83,6 @@ function updateInventory(){
         $( "#sieve" ).html(findFastestTool("sieve").name)
         sieveListener();
     }
-    
     updateRecipes()
 }
 
@@ -280,7 +276,7 @@ function blockDisplay(){
 
 // Selects a random block
 function randomBlock(location){
-    const localLocation = eval(location+"Materials");
+    const localLocation = materials.get(location);
     let totalPool = 0;
     let randomGen = Math.random();
     localLocation.forEach(material => {
@@ -311,11 +307,6 @@ function findFastestTool(type){
             currentTool = tools[i];
         }
     }
-    // tools.forEach(tool=>{
-    //     if (tool.type == type && tool.power>currentTool.power){
-    //         currentTool = tool;
-    //     }
-    // })
     return currentTool;
 }
 
@@ -335,12 +326,10 @@ function miningSpeedCalc(){
 
 // Removes the tool if its duribility reaches 0
 function checkToolDurability(){
-    let toolIndex = 0;
-    tools.forEach(tool=>{
+    tools.forEach((tool, index)=>{
         if (tool.durability == 0){
-            tools.splice(toolIndex, 1);
+            tools.splice(index, 1);
         }
-        toolIndex++;
     })
 }
 
@@ -362,6 +351,7 @@ function blockMine(){
     randomBlock(currentLocation);
 }
 
+// 
 function sieveComplete(){
     isSifting = false;
     $("#sieve").html("")
@@ -372,6 +362,7 @@ function sieveComplete(){
             findFastestTool("sieve").durability-=1;
             checkToolDurability();
             processLoot(recipe);
+            return;
         }
     })
 }
@@ -389,6 +380,7 @@ function blockClick(){
     
 }
 
+// Sifts gravel assuming user has sieve and gravel
 function sieveClick(){
     if(!isSifting && findFastestTool("sieve").power > 0 && itemCheck([{name: "Gravel", amount: 1}])){
         isSifting = true;
@@ -402,7 +394,6 @@ function sieveClick(){
 function recipeTabClick(tab){
     recipeTab = tab;
     updateRecipes();
-
 }
 
 function sieveListener(){
@@ -428,5 +419,4 @@ $(document).ready(function(){
     randomBlock(currentLocation);
     updateInventory();
     clickListeners();
-    //$(".container").append("<img src='"+ itemList[0].image +"' style='"+itemList[0].color+"'></img>")
 });

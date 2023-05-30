@@ -1,4 +1,4 @@
-export let itemList = [
+export const itemList = [
     {
         name: "Dirt",
         image: "images/powder-soft-sugar-sand-svgrepo-com.svg",
@@ -67,7 +67,7 @@ export let itemList = [
     
 ]
 
-export let toolList = [
+export const toolList = [
     {
         name: "Flint Pickaxe",
         image: "images/pickaxe-svgrepo-com.svg",
