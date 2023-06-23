@@ -7,6 +7,18 @@ import { fuel } from "./fuel.js";
 import { smeltables } from "./fuel.js";
 
 const items = [
+    {
+        name: "Oak Log",
+        amount: 20
+    },
+    {
+        name: "Raw Copper",
+        amount: 20
+    },
+    {
+        name: "Cobblestone",
+        amount: 20
+    }
 ];
 const tools = [
     {
@@ -57,6 +69,16 @@ const tools = [
         type: "saw",
         maxDurability: 40,
         durability: 40
+    },
+    {
+        name: "Stone Furnace",
+        image: "../images/furnace-svgrepo-com.svg",
+        color: "filter: invert(83%) sepia(0%) saturate(1151%) hue-rotate(166deg) brightness(80%) contrast(84%);",
+        group: "tool",
+        type: "furnace",
+        power: 1,
+        maxDurability: 10,
+        durability: 10
     },
 ];
 let currentLocation = "overworld"
@@ -162,6 +184,22 @@ function furnaceBurnOut(){
     updateFurnace();
 }
 
+function emptyFurnace(){
+    if (furnaceFuel.name != null){
+        collectItem({name: furnaceFuel.name, amount: furnaceFuel.amount})
+    }
+    furnaceFuel = {};
+    if (furnaceInput.name != null){
+        collectItem({name: furnaceInput.name, amount: furnaceInput.amount})
+    }
+    furnaceInput = {};
+    furnaceGoalTemp = 0;
+    furnaceTemp = 0;
+    isHeating = false;
+    isSmelting = false;
+    furnaceUpdate();
+}
+
 function furnaceSmelt(name, burnTemp, output){
     if(burnTemp<=furnaceTemp){
         collectItem({name: output, amount: 1})
@@ -169,6 +207,11 @@ function furnaceSmelt(name, burnTemp, output){
         collectItem({name: name, amount: 1})
     }
     isSmelting = false;
+    findFastestTool("furnace").durability-=1;
+    if (findFastestTool("furnace").durability < 1){
+        emptyFurnace();
+    }
+    checkToolDurability();
     updateFurnace();
 }
 
@@ -496,6 +539,7 @@ function checkToolDurability(){
             tools.splice(index, 1);
         }
     })
+    updateInventory();
 }
 
 // Run when block is finished mining
