@@ -3,6 +3,8 @@ import {toolList} from "./items.js";
 import {materials} from "./materials.js";
 import {handRecipes} from "./recipes.js";
 import {sieveRecipes} from "./sieve.js";
+import { fuel } from "./fuel.js";
+import { smeltables } from "./fuel.js";
 
 const items = [
     // {
@@ -25,6 +27,10 @@ const items = [
         name: "Oak Log",
         amount: 10
     },
+    {
+        name: "Raw Copper",
+        amount: 10
+    }
 ];
 const tools = [
     {
@@ -82,7 +88,14 @@ let currentLocation = "overworld"
 let currentMaterial = {};
 
 let furnaceTemp = 0;
+let furnaceGoalTemp = 0;
 let furnaceMaxTemp = 10000;
+let isHeating = false;
+let isSmelting = false;
+let furnaceFuel = {};
+let furnaceInput = {};
+let smeltingItem = {};
+let furnaceAvailable = false;
 
 let selectedItem = {};
 
@@ -134,7 +147,7 @@ function processLoot(material){
 
 function findItemIcon(inputItem){
     let outputImage = "";
-    itemList.forEach((item, index) => {
+    itemList.forEach(item => {
         if (inputItem.name == item.name){
             outputImage = item.image
             
@@ -145,7 +158,7 @@ function findItemIcon(inputItem){
 
 function findItemColor(inputItem){
     let outputColor = "";
-    itemList.forEach((item, index) => {
+    itemList.forEach(item => {
         if (inputItem.name == item.name){
             outputColor = item.color
             
@@ -168,6 +181,70 @@ function itemClickListeners(){
     })
 }
 
+function furnaceBurnOut(){
+    furnaceGoalTemp = 0;
+    isHeating = false;
+    updateFurnace();
+}
+
+function furnaceSmelt(name, burnTemp, output){
+    if(burnTemp<=furnaceTemp){
+        collectItem({name: output, amount: 1})
+    }else{
+        collectItem({name: name, amount: 1})
+    }
+    isSmelting = false;
+    updateFurnace();
+}
+
+function updateFurnace(){
+    //console.log(furnaceGoalTemp);
+    console.log(furnaceFuel);
+    if (furnaceFuel.amount<1 || furnaceFuel.name == null) {
+        furnaceFuel = {};
+        $("#furnace-fuel").html("");
+        
+    }else{
+        $("#furnace-fuel").html("<div class='item-icn' title='"+furnaceFuel.name+"'><img src='"+furnaceFuel.image+"' style='"+furnaceFuel.color+"' ><p class='item-icn-amount'>"+furnaceFuel.amount+"</p></div>");
+    }
+    
+    if (!isHeating && furnaceFuel.name != null){
+        fuel.forEach(fuelItem =>{
+            if (fuelItem.name == furnaceFuel.name){
+                furnaceGoalTemp = fuelItem.burnTemp;
+                setTimeout(function() {
+                    furnaceBurnOut();
+                }, fuelItem.burnTime)
+            }
+        })
+        furnaceFuel.amount--;
+        isHeating = true;
+        updateFurnace();
+    }
+
+    if (furnaceInput.amount<1 || furnaceInput.name == null) {
+        furnaceInput = {};
+        $("#furnace-input").html("");
+        
+    }else{
+        $("#furnace-input").html("<div class='item-icn' title='"+furnaceInput.name+"'><img src='"+furnaceInput.image+"' style='"+furnaceInput.color+"' ><p class='item-icn-amount'>"+furnaceInput.amount+"</p></div>");
+    }
+
+    if (!isSmelting && furnaceInput.name != null){
+        smeltables.forEach(smeltableItem => {
+            if (smeltableItem.name == furnaceInput.name && smeltableItem.burnTemp <= furnaceTemp){
+                setTimeout(function() {
+                    furnaceSmelt(smeltableItem.name, smeltableItem.burnTemp, smeltableItem.output);
+                }, smeltableItem.burnTime)
+                furnaceInput.amount--;
+                isSmelting = true;
+                updateFurnace();
+            }
+        })
+        
+    }
+}
+
 // Refreshes the view of the inventory
 function updateInventory(){
     $("#items-body").html("");
@@ -188,6 +265,12 @@ function updateInventory(){
         $("#sieve-container").html("<button id='sieve' class='btn btn-primary'></button>")
         $( "#sieve" ).html(findFastestTool("sieve").name)
         sieveListener();
+    }
+
+    $("#smelting-container").css("display", "none")
+    if (findFastestTool("furnace").power > 0){
+        //$("#smelting-container").html('<div class="progress"><div id="smelt-progress" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div><div class="furnace-bottom-row"><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-fuel"></button></div><div class="item-icn"><img src="./images/fire-svgrepo-com.svg" alt=""></div><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-input"></button></div></div>')
+        $("#smelting-container").css("display", "block");
     }
     updateRecipes();
     itemClickListeners();
@@ -509,15 +592,82 @@ function sieveListener(){
     })
 }
 
-function addSelectedListener(){
-    $("#add-selected-item").click(function(){
+function addSelectedClick(){
+    if (itemSelected){
+        collectItem({name: selectedItem.name, amount: selectedItem.amount})
+        itemSelected = false;
+        selectedItem = {};
+        console.log("item deposited")
+        $("#drag-item").html("");
+        $("#add-selected-item").prop( "disabled", true )
+    }
+}
+
+function updateSelectedItem(){
+    $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+findItemIcon(selectedItem)+"' style='"+findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+selectedItem.amount+"</p></div>")
+}
+
+function addFuel(){
+    if (furnaceFuel.name == null){
+        furnaceFuel = {name: selectedItem.name, amount: 1, image: findItemIcon(selectedItem), color: findItemColor(selectedItem)}
+        //console.log(selectedItem);
+    }else{
+        furnaceFuel.amount ++;
+    }
+    console.log(furnaceFuel);
+    updateFurnace();
+}
+
+function addFurnaceInput(){
+    if (furnaceInput.name == null){
+        furnaceInput = {name: selectedItem.name, amount: 1, image: findItemIcon(selectedItem), color: findItemColor(selectedItem)}
+        //console.log(selectedItem);
+    }else{
+        furnaceInput.amount ++;
+    }
+    console.log(furnaceInput);
+    updateFurnace();
+}
+
+function furnaceListeners(){
+    $("#furnace-fuel").click(function(){
         if (itemSelected){
-            collectItem({name: selectedItem.name, amount: selectedItem.amount})
-            itemSelected = false;
-            selectedItem = {};
-            console.log("item deposited")
-            $("#drag-item").html("");
-            $("#add-selected-item").prop( "disabled", true )
+            fuel.forEach(fuelItem => {
+                if (selectedItem.name == fuelItem.name && (selectedItem.name == furnaceFuel.name || furnaceFuel.name == null)){
+                    if (selectedItem.amount>1){
+                        addFuel();
+                        selectedItem.amount --;
+                        updateSelectedItem();
+                    }else{
+                        addFuel();
+                        selectedItem = {};
+                        $("#drag-item").html("");
+                        itemSelected = false;
+                    }
+                    
+                    
+                }
+            })
+        }
+    })
+    $("#furnace-input").click(function(){
+        if (itemSelected){
+            smeltables.forEach(smeltableItem => {
+                if (selectedItem.name == smeltableItem.name && (selectedItem.name == furnaceInput.name || furnaceInput.name == null)){
+                    if (selectedItem.amount>1){
+                        addFurnaceInput();
+                        selectedItem.amount --;
+                        updateSelectedItem();
+                    }else{
+                        addFurnaceInput();
+                        selectedItem = {};
+                        $("#drag-item").html("");
+                        itemSelected = false;
+                    }
+                    
+                    
+                }
+            })
         }
     })
 }
@@ -533,7 +683,28 @@ function clickListeners(){
         $(this).addClass("active")
     })
 
-    addSelectedListener();
+    $("#add-selected-item").click(function(){
+        addSelectedClick();
+    })
+
+    furnaceListeners();
+}
+
+// Furnace temperature-related updates
+function furnaceUpdate(){
+    if (furnaceTemp < furnaceGoalTemp){
+        furnaceTemp += 200;
+        console.log(furnaceTemp)
+        $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
+        console.log($('#smelt-progress').css('width'));
+        updateFurnace();
+    }else if(furnaceTemp > furnaceGoalTemp){
+        furnaceTemp -= 200;
+        console.log(furnaceTemp)
+        $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
+        console.log($('#smelt-progress').css('width'));
+        updateFurnace();
+    }
     
 }
 
@@ -541,4 +712,7 @@ $(document).ready(function(){
     randomBlock(currentLocation);
     updateInventory();
     clickListeners();
+
+    
+    let furnaceInterval = setInterval(furnaceUpdate, 1000);
 });

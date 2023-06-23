@@ -64,6 +64,16 @@ export const itemList = [
         image: "../images/wood-beam-svgrepo-com.svg",
         color: "filter: invert(35%) sepia(42%) saturate(858%) hue-rotate(2deg) brightness(92%) contrast(89%);"
     },
+    {
+        name: "Raw Copper",
+        image: "../images/rock-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);"
+    },
+    {
+        name: "Copper Ingot",
+        image: "../images/gold-ingot-gold-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);"
+    },
     
 ]
 

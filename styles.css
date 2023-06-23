@@ -97,3 +97,25 @@
     left: 0px;
     text-align: right;
 }
+
+#smelting-container {
+    width: 100%;
+}
+
+.furnace-bottom-row {
+    display:flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.furnace-slot {
+    width: 60px;
+    height: 60px;
+    background-color: transparent !important;
+    border-width: 4px !important;
+    padding: 0 !important;
+    color: black !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
