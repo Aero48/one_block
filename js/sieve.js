@@ -4,12 +4,21 @@ export const sieveRecipes = [
         drops: {
             pools: [
                 {
-                    poolWeight: 5,
+                    poolWeight: 7,
                     poolItems: [
                         {
                             name: "Flint",
-                            minAmount: 0,
+                            minAmount: 1,
                             maxAmount: 2,
+                        }
+                    ]
+                },
+                {
+                    poolWeight: 3,
+                    poolItems: [
+                        {
+                            name: "Raw Copper",
+                            amount: 1
                         }
                     ]
                 }

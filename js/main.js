@@ -7,82 +7,8 @@ import { fuel } from "./fuel.js";
 import { smeltables } from "./fuel.js";
 
 const items = [
-    // {
-    //     name: "Flint",
-    //     amount: 500
-    // },
-    // {
-    //     name: "Grass Twine",
-    //     amount: 500
-    // },
-    // {
-    //     name: "Weak Tool Handle",
-    //     amount: 500
-    // }
-    {
-        name: "Cobblestone",
-        amount: 10
-    },
-    {
-        name: "Oak Log",
-        amount: 10
-    },
-    {
-        name: "Raw Copper",
-        amount: 10
-    }
 ];
 const tools = [
-    {
-        name: "Primitive Sieve",
-        image: "../images/table-svgrepo-com.svg",
-        color: "filter: invert(35%) sepia(42%) saturate(858%) hue-rotate(2deg) brightness(92%) contrast(89%);",
-        group: "tool",
-        type: "sieve",
-        power: 1,
-        maxDurability: 2,
-        durability: 2
-    },
-    {
-        name: "Flint Pickaxe",
-        image: "../images/pickaxe-svgrepo-com.svg",
-        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-        group: "tool",
-        type: "pickaxe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Axe",
-        image: "../images/axe-tool-construction-svgrepo-com.svg",
-        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-        group: "tool",
-        type: "axe",
-        power: 0.1,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Shovel",
-        image: "../images/shovel-svgrepo-com.svg",
-        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-        group: "tool",
-        type: "shovel",
-        power: 0.2,
-        maxDurability: 20,
-        durability: 20
-    },
-    {
-        name: "Flint Sickle",
-        image: "../images/sickle-svgrepo-com.svg",
-        color: "filter: invert(21%) sepia(54%) saturate(0%) hue-rotate(242deg) brightness(94%) contrast(91%);",
-        group: "tool",
-        type: "sickle",
-        power: 0.2,
-        maxDurability: 20,
-        durability: 20
-    },
 ];
 let currentLocation = "overworld"
 let currentMaterial = {};
