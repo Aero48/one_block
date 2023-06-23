@@ -140,6 +140,116 @@ export const handRecipes = [
     {
         inputs: [
             {
+                name: "Weak Tool Handle",
+                amount: 1
+            },
+            {
+                name: "Grass Twine",
+                amount: 1
+            },
+            {
+                name: "Copper Ingot",
+                amount: 3
+            }
+        ],
+        output: {
+            name: "Copper Pickaxe",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
+                name: "Weak Tool Handle",
+                amount: 1
+            },
+            {
+                name: "Grass Twine",
+                amount: 1
+            },
+            {
+                name: "Copper Ingot",
+                amount: 3
+            }
+        ],
+        output: {
+            name: "Copper Axe",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
+                name: "Weak Tool Handle",
+                amount: 1
+            },
+            {
+                name: "Grass Twine",
+                amount: 1
+            },
+            {
+                name: "Copper Ingot",
+                amount: 1
+            }
+        ],
+        output: {
+            name: "Copper Shovel",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
+                name: "Weak Tool Handle",
+                amount: 1
+            },
+            {
+                name: "Grass Twine",
+                amount: 1
+            },
+            {
+                name: "Copper Ingot",
+                amount: 1
+            }
+        ],
+        output: {
+            name: "Copper Sickle",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
+                name: "Weak Tool Handle",
+                amount: 1
+            },
+            {
+                name: "Grass Twine",
+                amount: 1
+            },
+            {
+                name: "Copper Ingot",
+                amount: 4
+            }
+        ],
+        output: {
+            name: "Copper Saw",
+            group: "tool"
+        },
+        category: "tool",
+        unlocked: false
+    },
+    {
+        inputs: [
+            {
                 name: "Flint Saw",
                 amount: 1
             },
@@ -188,7 +298,7 @@ export const handRecipes = [
             name: "Primitive Sieve",
             group: "tool"
         },
-        category: "tool",
+        category: "station",
         unlocked: false
     },
     {
@@ -206,7 +316,8 @@ export const handRecipes = [
             name: "Stone Furnace",
             group: "tool"
         },
-        category: "tool",
+        category: "station",
         unlocked: false
     }
+    
 ]

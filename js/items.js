@@ -146,5 +146,54 @@ export const toolList = [
         power: 1,
         maxDurability: 10,
         durability: 10
-    }
+    },
+    {
+        name: "Copper Pickaxe",
+        image: "../images/pickaxe-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
+        group: "tool",
+        type: "pickaxe",
+        power: 0.2,
+        maxDurability: 40,
+        durability: 40
+    },
+    {
+        name: "Copper Axe",
+        image: "../images/axe-tool-construction-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
+        group: "tool",
+        type: "axe",
+        power: 0.2,
+        maxDurability: 40,
+        durability: 40
+    },
+    {
+        name: "Copper Shovel",
+        image: "../images/shovel-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
+        group: "tool",
+        type: "shovel",
+        power: 0.3,
+        maxDurability: 40,
+        durability: 40
+    },
+    {
+        name: "Copper Sickle",
+        image: "../images/sickle-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
+        group: "tool",
+        type: "sickle",
+        power: 0.3,
+        maxDurability: 40,
+        durability: 40
+    },
+    {
+        name: "Copper Saw",
+        image: "../images/saw-illustration-1-svgrepo-com.svg",
+        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
+        group: "tool",
+        type: "saw",
+        maxDurability: 40,
+        durability: 40
+    },
 ]
