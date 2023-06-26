@@ -343,8 +343,7 @@ function updateRecipes(){
     // Handles the display of unlocked recipes
     console.log(recipeTab);
     unlockedRecipes.forEach(recipe=>{
-        
-        if (recipe.category == recipeTab || recipeTab == "all"){
+        if ((recipe.category == recipeTab || recipeTab == "all")&&itemCheck(recipe.inputs)){
             let recipeString = "";
             let recipeBtn = "";
             recipe.inputs.forEach(input=>{
@@ -375,10 +374,45 @@ function updateRecipes(){
             }else{
                 recipeString += "</div>"
             }
-            if (itemCheck(recipe.inputs)){
-                recipeString += "<button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
+            
+            recipeBtn += "<div class='craft-btn'><button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button></div>"
+            $("#recipes-body").append("<tr><td><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</tr>")
+        }
+        
+    })
+    unlockedRecipes.forEach(recipe=>{
+        if ((recipe.category == recipeTab || recipeTab == "all")&&!itemCheck(recipe.inputs)){
+            let recipeString = "";
+            let recipeBtn = "";
+            recipe.inputs.forEach(input=>{
+                itemList.forEach(itemEl => {
+                    if (itemEl.name == input.name){
+                        recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                    }
+                })
+                toolList.forEach(toolEl => {
+                    if (toolEl.name == input.name){
+                        recipeString += "<div class='item-icn' title='"+toolEl.name+"'><img src='"+toolEl.image+"' style='"+toolEl.color+"' ></div>"
+                    }
+                })
+            })
+            recipeString += " --> "
+            itemList.forEach(itemEl => {
+                if (itemEl.name == recipe.output.name){
+                    recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' >"
+                }
+            })
+            toolList.forEach(toolEl => {
+                if (toolEl.name == recipe.output.name){
+                    recipeString += "<div class='item-icn' title='"+toolEl.name+"'><img src='"+toolEl.image+"' style='"+toolEl.color+"' >"
+                }
+            })
+            if (recipe.output.amount != null){
+                recipeString += "<p class='item-icn-amount'>"+recipe.output.amount+"</p></div>"
+            }else{
+                recipeString += "</div>"
             }
-            $("#recipes-body").append("<tr><td>"+ recipeString +"</tr>")
+            $("#recipes-body").append("<tr><td><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</tr>")
         }
         
     })

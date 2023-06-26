@@ -56,13 +56,15 @@
 
 #recipes-body tr td {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#recipes-body tr td .recipe-content{
+    display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
-}
-
-#recipes-body tr td button{
-    float:right;
 }
 
 .task-content {
