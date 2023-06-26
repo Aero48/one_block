@@ -276,7 +276,7 @@ function updateInventory(){
         })
     })
     tools.forEach(tool => {
-        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+"'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
+        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+": "+Math.floor((tool.durability/tool.maxDurability)*100)+"%'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
     })
 
     $("#sieve-container").html("")
