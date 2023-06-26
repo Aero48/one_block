@@ -198,6 +198,7 @@ function emptyFurnace(){
     isHeating = false;
     isSmelting = false;
     furnaceUpdate();
+    // Bar doesn't update when new furnace is crafted
 }
 
 function furnaceSmelt(name, burnTemp, output){
@@ -275,7 +276,7 @@ function updateInventory(){
         })
     })
     tools.forEach(tool => {
-        $("#tools-body").append("<tr><td>"+Math.floor((tool.durability/tool.maxDurability)*100)+"% <div class='item-icn' title='"+tool.name+"'><img src='"+tool.image+"' style='"+tool.color+"' ></div></td></tr>")
+        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+"'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
     })
 
     $("#sieve-container").html("")
@@ -345,6 +346,7 @@ function updateRecipes(){
         
         if (recipe.category == recipeTab || recipeTab == "all"){
             let recipeString = "";
+            let recipeBtn = "";
             recipe.inputs.forEach(input=>{
                 itemList.forEach(itemEl => {
                     if (itemEl.name == input.name){
@@ -374,9 +376,9 @@ function updateRecipes(){
                 recipeString += "</div>"
             }
             if (itemCheck(recipe.inputs)){
-                recipeString += " <button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
+                recipeString += "<button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button>"
             }
-            $("#recipes-body").append("<tr><td>"+ recipeString +"</td></tr>")
+            $("#recipes-body").append("<tr><td>"+ recipeString +"</tr>")
         }
         
     })
