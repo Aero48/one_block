@@ -198,8 +198,8 @@ export const toolList = [
         group: "tool",
         type: "sieve",
         power: 2,
-        maxDurability: 20,
-        durability: 20
+        maxDurability: 30,
+        durability: 30
     },
     {
         name: "Stone Furnace",

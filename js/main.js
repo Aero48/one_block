@@ -1,3 +1,4 @@
+// TODO planks to tool handle
 import {itemList} from "./items.js";
 import {toolList} from "./items.js";
 import {materials} from "./materials.js";
@@ -7,10 +8,8 @@ import { fuel } from "./fuel.js";
 import { smeltables } from "./fuel.js";
 
 const items = [
-    
 ];
 const tools = [
-    
 ];
 let currentLocation = "overworld"
 let currentMaterial = {};
@@ -96,6 +95,24 @@ function findItemColor(inputItem){
     return outputColor;
 }
 
+function itemAmountIndicator(amount){
+    if (amount == 1){
+        return "";
+    }else if(amount<1000){
+        return amount;
+    }else if(amount<100000){
+        return (Math.floor(amount/100))/10 + 'K';
+    }else if(amount<1000000){
+        return (Math.floor(amount/1000)) + 'K';
+    }else if(amount<100000000){
+        return (Math.floor(amount/100000))/10 + 'M';
+    }else if(amount<1000000000){
+        return (Math.floor(amount/1000000)) + 'M';
+    }else{
+        return "∞"
+    }
+}
+
 function itemClickListeners(){
     
     $("#items-body .item-icn").off("click");
@@ -103,7 +120,7 @@ function itemClickListeners(){
         if (!itemSelected){
             itemSelected = true;
             selectedItem = {name: items[this.dataset.index].name, amount: items[this.dataset.index].amount, image:items[this.dataset.index].image, color:items[this.dataset.index].color}
-            $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+findItemIcon(selectedItem)+"' style='"+findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+selectedItem.amount+"</p></div>")
+            $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+findItemIcon(selectedItem)+"' style='"+findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+itemAmountIndicator(selectedItem.amount)+"</p></div>")
             removeItem(selectedItem.name, selectedItem.amount);
             $("#add-selected-item").prop( "disabled", false )
         }
@@ -131,6 +148,8 @@ function emptyFurnace(){
     isSmelting = false;
     furnaceUpdate();
     // Bar doesn't update when new furnace is crafted
+    $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
+    furnaceHeatBarColor();
 }
 
 function furnaceSmelt(name, burnTemp, output){
@@ -156,7 +175,7 @@ function updateFurnace(){
         $("#furnace-fuel").html("");
         
     }else{
-        $("#furnace-fuel").html("<div class='item-icn' title='"+furnaceFuel.name+"'><img src='"+furnaceFuel.image+"' style='"+furnaceFuel.color+"' ><p class='item-icn-amount'>"+furnaceFuel.amount+"</p></div>");
+        $("#furnace-fuel").html("<div class='item-icn' title='"+furnaceFuel.name+"'><img src='"+furnaceFuel.image+"' style='"+furnaceFuel.color+"' ><p class='item-icn-amount'>"+itemAmountIndicator(furnaceFuel.amount)+"</p></div>");
     }
     
     if (!isHeating && furnaceFuel.name != null){
@@ -178,7 +197,7 @@ function updateFurnace(){
         $("#furnace-input").html("");
         
     }else{
-        $("#furnace-input").html("<div class='item-icn' title='"+furnaceInput.name+"'><img src='"+furnaceInput.image+"' style='"+furnaceInput.color+"' ><p class='item-icn-amount'>"+furnaceInput.amount+"</p></div>");
+        $("#furnace-input").html("<div class='item-icn' title='"+furnaceInput.name+"'><img src='"+furnaceInput.image+"' style='"+furnaceInput.color+"' ><p class='item-icn-amount'>"+itemAmountIndicator(furnaceInput.amount)+"</p></div>");
     }
 
     if (!isSmelting && furnaceInput.name != null){
@@ -203,12 +222,12 @@ function updateInventory(){
     items.forEach((item,index) => {
         itemList.forEach(itemEl => {
             if (item.name == itemEl.name){
-                $("#items-body").append("<div class='item-icn' title='"+itemEl.name+"' data-index='"+index+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+item.amount+"</p></div>")
+                $("#items-body").append("<div class='item-icn' title='"+itemEl.name+" x"+ item.amount +"' data-index='"+index+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+itemAmountIndicator(item.amount)+"</p></div>")
             }
         })
     })
     tools.forEach(tool => {
-        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+": "+Math.floor((tool.durability/tool.maxDurability)*100)+"%'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
+        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+": "+ tool.durability + "/" + tool.maxDurability + "'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
     })
 
     $("#sieve-container").html("")
@@ -221,7 +240,9 @@ function updateInventory(){
     $("#smelting-container").css("display", "none")
     if (findFastestTool("furnace").power > 0){
         //$("#smelting-container").html('<div class="progress"><div id="smelt-progress" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div><div class="furnace-bottom-row"><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-fuel"></button></div><div class="item-icn"><img src="./images/fire-svgrepo-com.svg" alt=""></div><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-input"></button></div></div>')
+        furnaceUpdate();
         $("#smelting-container").css("display", "block");
+
     }
 
     // furnaceSpeed = 1000/findFastestTool("furnace").power;
@@ -284,7 +305,7 @@ function updateRecipes(){
             recipe.inputs.forEach(input=>{
                 itemList.forEach(itemEl => {
                     if (itemEl.name == input.name){
-                        recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                        recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+itemAmountIndicator(input.amount)+"</p></div>"
                     }
                 })
                 toolList.forEach(toolEl => {
@@ -322,7 +343,7 @@ function updateRecipes(){
             recipe.inputs.forEach(input=>{
                 itemList.forEach(itemEl => {
                     if (itemEl.name == input.name){
-                        recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+input.amount+"</p></div>"
+                        recipeString += "<div class='item-icn' title='"+itemEl.name+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+itemAmountIndicator(input.amount)+"</p></div>"
                     }
                 })
                 toolList.forEach(toolEl => {
@@ -343,7 +364,7 @@ function updateRecipes(){
                 }
             })
             if (recipe.output.amount != null){
-                recipeString += "<p class='item-icn-amount'>"+recipe.output.amount+"</p></div>"
+                recipeString += "<p class='item-icn-amount'>"+itemAmountIndicator(recipe.output.amount)+"</p></div>"
             }else{
                 recipeString += "</div>"
             }
@@ -409,6 +430,7 @@ function collectItem(itemStack){
                 tools.push({name: toolEl.name, image: toolEl.image, color: toolEl.color, group: toolEl.group, type: toolEl.type, power: toolEl.power, maxDurability: toolEl.maxDurability, durability:toolEl.maxDurability})
             }
         })
+        blockDisplay();
     }else{
         items.forEach(item => {
             if (itemStack.name == item.name){
@@ -508,6 +530,7 @@ function checkToolDurability(){
     tools.forEach((tool, index)=>{
         if (tool.durability == 0){
             tools.splice(index, 1);
+            blockDisplay();
         }
     })
     updateInventory();
@@ -696,9 +719,11 @@ function furnaceHeatBarColor(){
     }else if (furnaceTemp >= 2000){
         $('#smelt-progress').css('background-color', '#fd7e14')
         $('#furnace-flame-icn').css('filter', 'invert(75%) sepia(67%) saturate(4748%) hue-rotate(346deg) brightness(96%) contrast(108%)')
-    }else{
+    }else if (furnaceTemp > 0){
         $('#smelt-progress').css('background-color', '#dc3545')
         $('#furnace-flame-icn').css('filter', 'invert(16%) sepia(100%) saturate(3214%) hue-rotate(345deg) brightness(107%) contrast(73%)')
+    }else{
+        $('#furnace-flame-icn').css('filter', 'none')
     }
 }
 

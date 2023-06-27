@@ -607,7 +607,7 @@ export const handRecipes = [
         inputs: [
             {
                 name: "Grass Twine",
-                amount: 4
+                amount: 3
             }
         ],
         output: {
