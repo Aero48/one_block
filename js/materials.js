@@ -103,7 +103,7 @@ export const materials = new Map([
                             {
                                 name: "Grass",
                                 minAmount: 1,
-                                maxAmount: 2
+                                maxAmount: 3
                             }
                         ]
                     }
