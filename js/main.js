@@ -7,79 +7,10 @@ import { fuel } from "./fuel.js";
 import { smeltables } from "./fuel.js";
 
 const items = [
-    {
-        name: "Oak Log",
-        amount: 20
-    },
-    {
-        name: "Raw Copper",
-        amount: 20
-    },
-    {
-        name: "Cobblestone",
-        amount: 20
-    }
+    
 ];
 const tools = [
-    {
-        name: "Copper Pickaxe",
-        image: "../images/pickaxe-svgrepo-com.svg",
-        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
-        group: "tool",
-        type: "pickaxe",
-        power: 0.2,
-        maxDurability: 40,
-        durability: 40
-    },
-    {
-        name: "Copper Axe",
-        image: "../images/axe-tool-construction-svgrepo-com.svg",
-        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
-        group: "tool",
-        type: "axe",
-        power: 0.2,
-        maxDurability: 40,
-        durability: 40
-    },
-    {
-        name: "Copper Shovel",
-        image: "../images/shovel-svgrepo-com.svg",
-        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
-        group: "tool",
-        type: "shovel",
-        power: 0.3,
-        maxDurability: 40,
-        durability: 40
-    },
-    {
-        name: "Copper Sickle",
-        image: "../images/sickle-svgrepo-com.svg",
-        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
-        group: "tool",
-        type: "sickle",
-        power: 0.3,
-        maxDurability: 40,
-        durability: 40
-    },
-    {
-        name: "Copper Saw",
-        image: "../images/saw-illustration-1-svgrepo-com.svg",
-        color: "filter: invert(45%) sepia(49%) saturate(1053%) hue-rotate(340deg) brightness(91%) contrast(81%);",
-        group: "tool",
-        type: "saw",
-        maxDurability: 40,
-        durability: 40
-    },
-    {
-        name: "Stone Furnace",
-        image: "../images/furnace-svgrepo-com.svg",
-        color: "filter: invert(83%) sepia(0%) saturate(1151%) hue-rotate(166deg) brightness(80%) contrast(84%);",
-        group: "tool",
-        type: "furnace",
-        power: 1,
-        maxDurability: 10,
-        durability: 10
-    },
+    
 ];
 let currentLocation = "overworld"
 let currentMaterial = {};
@@ -87,6 +18,7 @@ let currentMaterial = {};
 let furnaceTemp = 0;
 let furnaceGoalTemp = 0;
 let furnaceMaxTemp = 10000;
+let furnaceSpeed = 1000;
 let isHeating = false;
 let isSmelting = false;
 let furnaceFuel = {};
@@ -291,6 +223,9 @@ function updateInventory(){
         //$("#smelting-container").html('<div class="progress"><div id="smelt-progress" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div><div class="furnace-bottom-row"><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-fuel"></button></div><div class="item-icn"><img src="./images/fire-svgrepo-com.svg" alt=""></div><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-input"></button></div></div>')
         $("#smelting-container").css("display", "block");
     }
+
+    // furnaceSpeed = 1000/findFastestTool("furnace").power;
+
     updateRecipes();
     itemClickListeners();
 }
@@ -745,18 +680,42 @@ function clickListeners(){
     furnaceListeners();
 }
 
+function furnaceHeatBarColor(){
+    if (furnaceTemp == 10000){
+        $('#smelt-progress').css('background-color', '#e9dbff')
+        $('#furnace-flame-icn').css('filter', 'invert(82%) sepia(28%) saturate(381%) hue-rotate(210deg) brightness(102%) contrast(103%)')
+    }else if (furnaceTemp >= 8000){
+        $('#smelt-progress').css('background-color', '#bfc4ff')
+        $('#furnace-flame-icn').css('filter', 'invert(76%) sepia(24%) saturate(1287%) hue-rotate(194deg) brightness(102%) contrast(111%)')
+    }else if (furnaceTemp >= 6000){
+        $('#smelt-progress').css('background-color', '#6dcffc')
+        $('#furnace-flame-icn').css('filter', 'invert(70%) sepia(84%) saturate(601%) hue-rotate(170deg) brightness(102%) contrast(98%)')
+    }else if (furnaceTemp >= 4000){
+        $('#smelt-progress').css('background-color', '#ffc107')
+        $('#furnace-flame-icn').css('filter', 'invert(81%) sepia(29%) saturate(3521%) hue-rotate(354deg) brightness(103%) contrast(101%)')
+    }else if (furnaceTemp >= 2000){
+        $('#smelt-progress').css('background-color', '#fd7e14')
+        $('#furnace-flame-icn').css('filter', 'invert(75%) sepia(67%) saturate(4748%) hue-rotate(346deg) brightness(96%) contrast(108%)')
+    }else{
+        $('#smelt-progress').css('background-color', '#dc3545')
+        $('#furnace-flame-icn').css('filter', 'invert(16%) sepia(100%) saturate(3214%) hue-rotate(345deg) brightness(107%) contrast(73%)')
+    }
+}
+
 // Furnace temperature-related updates
 function furnaceUpdate(){
     if (furnaceTemp < furnaceGoalTemp){
         furnaceTemp += 200;
         console.log(furnaceTemp)
         $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
+        furnaceHeatBarColor();
         console.log($('#smelt-progress').css('width'));
         updateFurnace();
     }else if(furnaceTemp > furnaceGoalTemp){
         furnaceTemp -= 200;
         console.log(furnaceTemp)
         $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
+        furnaceHeatBarColor();
         console.log($('#smelt-progress').css('width'));
         updateFurnace();
     }
@@ -769,5 +728,5 @@ $(document).ready(function(){
     clickListeners();
 
     
-    let furnaceInterval = setInterval(furnaceUpdate, 1000);
+    const furnaceInterval = setInterval(furnaceUpdate, 1000);
 });

@@ -26,5 +26,51 @@ export const sieveRecipes = [
             ]
         }
         
+    },
+    {
+        power: 2,
+        drops: {
+            pools: [
+                {
+                    poolWeight: 4,
+                    poolItems: [
+                        {
+                            name: "Flint",
+                            minAmount: 1,
+                            maxAmount: 2,
+                        }
+                    ]
+                },
+                {
+                    poolWeight: 3,
+                    poolItems: [
+                        {
+                            name: "Coal",
+                            amount: 1
+                        }
+                    ]
+                },
+                {
+                    poolWeight: 3,
+                    poolItems: [
+                        {
+                            name: "Raw Copper",
+                            amount: 1
+                        }
+                    ]
+                },
+                {
+                    poolWeight: 3,
+                    poolItems: [
+                        {
+                            name: "Raw Tin",
+                            amount: 1
+                        }
+                    ]
+                }
+                
+            ]
+        }
+        
     }
 ]
