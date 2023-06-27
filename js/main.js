@@ -240,7 +240,7 @@ function updateInventory(){
     $("#smelting-container").css("display", "none")
     if (findFastestTool("furnace").power > 0){
         //$("#smelting-container").html('<div class="progress"><div id="smelt-progress" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div><div class="furnace-bottom-row"><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-fuel"></button></div><div class="item-icn"><img src="./images/fire-svgrepo-com.svg" alt=""></div><div class="furnace-icon-div"><button class="btn btn-primary furnace-slot" id="furnace-input"></button></div></div>')
-        furnaceUpdate();
+        //furnaceUpdate();
         $("#smelting-container").css("display", "block");
 
     }
@@ -730,7 +730,7 @@ function furnaceHeatBarColor(){
 // Furnace temperature-related updates
 function furnaceUpdate(){
     if (furnaceTemp < furnaceGoalTemp){
-        furnaceTemp += 200;
+        furnaceTemp += 200 * findFastestTool("furnace").power;
         console.log(furnaceTemp)
         $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
         furnaceHeatBarColor();

@@ -7,7 +7,7 @@ export const fuel = [
     {
         name: "Coal",
         burnTime: 40000,
-        burnTemp: 5000
+        burnTemp: 4000
     },
     {
         name: "God Crystal",
@@ -50,7 +50,7 @@ export const smeltables = [
     {
         name: "Bronze Blend",
         burnTime: 10000,
-        burnTemp: 5000,
+        burnTemp: 4000,
         output: "Bronze Ingot"
     },
     

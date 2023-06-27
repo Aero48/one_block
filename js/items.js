@@ -217,7 +217,7 @@ export const toolList = [
         color: "filter: invert(9%) sepia(77%) saturate(3803%) hue-rotate(336deg) brightness(84%) contrast(102%);",
         group: "tool",
         type: "furnace",
-        power: 1.5,
+        power: 2,
         maxDurability: 20,
         durability: 20
     },
