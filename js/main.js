@@ -8,8 +8,10 @@ import { fuel } from "./fuel.js";
 import { smeltables } from "./fuel.js";
 
 const items = [
+
 ];
 const tools = [
+    
 ];
 let currentLocation = "overworld"
 let currentMaterial = {};
@@ -230,10 +232,15 @@ function updateInventory(){
         $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+": "+ tool.durability + "/" + tool.maxDurability + "'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
     })
 
-    $("#sieve-container").html("")
+    $("#sieve-container").css("display", "none")
     if (findFastestTool("sieve").power > 0){
-        $("#sieve-container").html("<button id='sieve' class='btn btn-primary'></button>")
-        $( "#sieve" ).html(findFastestTool("sieve").name)
+        $("#sieve-container").css("display", "block")
+        //$("#sieve-container").html("<button id='sieve' class='btn btn-primary'></button>")
+        if(isSifting){
+            $("#sieve").html("<div class='spinner-border text-light'></div>")
+        }else{
+            $( "#sieve" ).html(findFastestTool("sieve").name)
+        }
         sieveListener();
     }
 
