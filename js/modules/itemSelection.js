@@ -87,7 +87,7 @@ export function updateSelectedItem(){
         $("#add-selected-item").prop( "disabled", false )
         $("#remove-selected-item").prop( "disabled", false )
     }else{
-        $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+itemHandler.findItemIcon(selectedItem)+"' style='"+itemHandler.findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(selectedItem.amount)+"</p></div>")
+        $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='../"+itemHandler.findItemIcon(selectedItem)+"' style='"+itemHandler.findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(selectedItem.amount)+"</p></div>")
         $("#add-selected-item").prop( "disabled", false )
         $("#remove-selected-item").prop( "disabled", false )
     }
