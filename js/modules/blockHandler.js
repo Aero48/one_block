@@ -8,7 +8,7 @@ import { processLoot } from "./lootProcessor.js";
 let currentLocation = "overworld"
 let currentMaterial = {};
 let baseMiningSpeed = 5000;
-let isMining = false;
+export let isMining = false;
 
 // Displays the current material in the button
 export function blockDisplay(){

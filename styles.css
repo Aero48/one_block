@@ -23,7 +23,6 @@
 #tools-body {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
 }
 
 #add-selected-item {
@@ -146,13 +145,36 @@
     align-items: center;
 }
 
-.item-divider {
+.divider-container {
     height: 50px;
     width: 10px;
+    z-index: 1;
+}
+
+.item-divider {
+    height: 50px;
+    width: 20px;
     background-color: green;
     opacity: 0;
+    border-radius: 5px;
+    position: relative;
+    left: -5px;
 }
 
 .item-divider:hover{
-    opacity: 1;
+    opacity: .3;
+}
+
+.tool-divider {
+    height: 50px;
+    width: 20px;
+    background-color: green;
+    opacity: 0;
+    border-radius: 5px;
+    position: relative;
+    left: -5px;
+}
+
+.tool-divider:hover{
+    opacity: .3;
 }

@@ -7,8 +7,8 @@ let furnaceTemp = 0;
 let furnaceGoalTemp = 0;
 let furnaceMaxTemp = 10000;
 
-let isHeating = false;
-let isSmelting = false;
+export let isHeating = false;
+export let isSmelting = false;
 let furnaceFuel = {};
 let furnaceInput = {};
 
