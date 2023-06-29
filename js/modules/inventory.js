@@ -130,6 +130,12 @@ export function checkToolDurability(){
     updateInventory();
 }
 
+export function giveTool(itemStack){
+    tools.push(itemStack);
+    blockDisplay();
+    updateInventory();
+}
+
 // General function for when you obtain an item
 export function collectItem(itemStack){
     let alreadyObtained = false;

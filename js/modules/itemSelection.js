@@ -54,7 +54,7 @@ export function selectTool(idx){
 export function addSelectedClick(){
     if (itemSelected){
         if(selectedItem.group == "tool"){
-            inventory.collectItem(selectedItem);
+            inventory.giveTool(JSON.parse(JSON.stringify(selectedItem)));
             clearSelectedItem();
         }else{
             inventory.collectItem({name: selectedItem.name, amount: selectedItem.amount})
