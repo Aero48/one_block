@@ -1,6 +1,6 @@
 import * as itemHandler from "./itemHandler.js";
 import * as inventory from "./inventory.js";
-import { itemSelected, selectedItem, updateSelectedItem } from "./itemSelection.js";
+import { itemSelected, selectedItem, updateSelectedItem, clearSelectedItem, addSelectedItem } from "./itemSelection.js";
 import { fuel, smeltables } from "../data/fuel.js";
 
 let furnaceTemp = 0;
@@ -56,8 +56,6 @@ function emptyFurnace(){
 }
 
 function updateFurnace(){
-    //console.log(furnaceGoalTemp);
-    console.log(furnaceFuel);
     if (furnaceFuel.amount<1 || furnaceFuel.name == null) {
         furnaceFuel = {};
         $("#furnace-fuel").html("");
@@ -104,26 +102,38 @@ function updateFurnace(){
 }
 
 // Adds fuel to the furnace input slot
-function addFuel(){
+function addFuel(amount){
     if (furnaceFuel.name == null){
-        furnaceFuel = {name: selectedItem.name, amount: 1, image: itemHandler.findItemIcon(selectedItem), color: itemHandler.findItemColor(selectedItem)}
-        //console.log(selectedItem);
+        furnaceFuel = {name: selectedItem.name, amount: amount, image: itemHandler.findItemIcon(selectedItem), color: itemHandler.findItemColor(selectedItem)}
     }else{
-        furnaceFuel.amount ++;
+        furnaceFuel.amount += amount;
     }
-    console.log(furnaceFuel);
+    updateFurnace();
+}
+
+function removeFuel(amount){
+    furnaceFuel.amount -= amount;
+    if (furnaceFuel.amount < 1){
+        furnaceFuel = {};
+    }
     updateFurnace();
 }
 
 // Adds items to the furnace input slot
-function addFurnaceInput(){
+function addFurnaceInput(amount){
     if (furnaceInput.name == null){
-        furnaceInput = {name: selectedItem.name, amount: 1, image: itemHandler.findItemIcon(selectedItem), color: itemHandler.findItemColor(selectedItem)}
-        //console.log(selectedItem);
+        furnaceInput = {name: selectedItem.name, amount: amount, image: itemHandler.findItemIcon(selectedItem), color: itemHandler.findItemColor(selectedItem)}
     }else{
-        furnaceInput.amount ++;
+        furnaceInput.amount += amount;
     }
-    console.log(furnaceInput);
+    updateFurnace();
+}
+
+function removeFurnaceInput(amount){
+    furnaceInput.amount -= amount;
+    if (furnaceInput.amount < 1){
+        furnaceInput = {};
+    }
     updateFurnace();
 }
 
@@ -156,17 +166,13 @@ function furnaceHeatBarColor(){
 export function furnaceUpdate(){
     if (furnaceTemp < furnaceGoalTemp){
         furnaceTemp += 200 * itemHandler.findFastestTool("furnace").power;
-        console.log(furnaceTemp)
         $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
         furnaceHeatBarColor();
-        console.log($('#smelt-progress').css('width'));
         updateFurnace();
     }else if(furnaceTemp > furnaceGoalTemp){
         furnaceTemp -= 200;
-        console.log(furnaceTemp)
         $('#smelt-progress').attr('aria-valuenow', furnaceTemp/furnaceMaxTemp).css('width', (furnaceTemp/furnaceMaxTemp*100)+'%');
         furnaceHeatBarColor();
-        console.log($('#smelt-progress').css('width'));
         updateFurnace();
     }
     
@@ -174,36 +180,79 @@ export function furnaceUpdate(){
 
 // Listeners for the furnace slots
 export function furnaceListeners(){
-    $("#furnace-fuel").click(function(){
-        if (itemSelected){
-            fuel.forEach(fuelItem => {
-                if (selectedItem.name == fuelItem.name && (selectedItem.name == furnaceFuel.name || furnaceFuel.name == null)){
-                    if (selectedItem.amount>1){
-                        addFuel();
-                        selectedItem.amount --;
-                        updateSelectedItem();
-                    }else{
-                        addFuel();
-                        clearSelectedItem();
-                    }
+    $("#furnace-fuel").mousedown(function(event){
+        switch (event.which) {
+            case 1:
+                if (itemSelected){
+                    fuel.forEach(fuelItem => {
+                        if (selectedItem.name == fuelItem.name && (selectedItem.name == furnaceFuel.name || furnaceFuel.name == null)){
+                            addFuel(selectedItem.amount);
+                            clearSelectedItem();
+                        }
+                    })
+                }else{
+                    addSelectedItem(furnaceFuel, furnaceFuel.amount);
+                    removeFuel(furnaceFuel.amount);
                 }
-            })
+                break;
+            case 2:
+                break;
+            case 3:
+                if (itemSelected){
+                    fuel.forEach(fuelItem => {
+                        if (selectedItem.name == fuelItem.name && (selectedItem.name == furnaceFuel.name || furnaceFuel.name == null)){
+                            if (selectedItem.amount>1){
+                                addFuel(1);
+                                selectedItem.amount --;
+                                updateSelectedItem();
+                            }else{
+                                addFuel(1);
+                                clearSelectedItem();
+                            }
+                        }
+                    })
+                }
+                break;
+            default:
+                console.log("unknown mouse button clicked");
         }
+        
     })
-    $("#furnace-input").click(function(){
-        if (itemSelected){
-            smeltables.forEach(smeltableItem => {
-                if (selectedItem.name == smeltableItem.name && (selectedItem.name == furnaceInput.name || furnaceInput.name == null)){
-                    if (selectedItem.amount>1){
-                        addFurnaceInput();
-                        selectedItem.amount --;
-                        updateSelectedItem();
-                    }else{
-                        addFurnaceInput();
-                        clearSelectedItem();
-                    }
+    $("#furnace-input").mousedown(function(event){
+        switch (event.which) {
+            case 1:
+                if (itemSelected){
+                    smeltables.forEach(smeltItem => {
+                        if (selectedItem.name == smeltItem.name && (selectedItem.name == furnaceInput.name || furnaceInput.name == null)){
+                            addFurnaceInput(selectedItem.amount);
+                            clearSelectedItem();
+                        }
+                    })
+                }else{
+                    addSelectedItem(furnaceInput, furnaceInput.amount);
+                    removeFurnaceInput(furnaceInput.amount);
                 }
-            })
+                break;
+            case 2:
+                break;
+            case 3:
+                if (itemSelected){
+                    smeltables.forEach(smeltItem => {
+                        if (selectedItem.name == smeltItem.name && (selectedItem.name == furnaceInput.name || furnaceInput.name == null)){
+                            if (selectedItem.amount>1){
+                                addFurnaceInput(1);
+                                selectedItem.amount --;
+                                updateSelectedItem();
+                            }else{
+                                addFurnaceInput(1);
+                                clearSelectedItem();
+                            }
+                        }
+                    })
+                }
+                break;
+            default:
+                console.log("unknown mouse button clicked");
         }
     })
 }

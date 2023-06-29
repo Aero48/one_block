@@ -11,7 +11,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div id="drag-item" >
     </div>
     <div class="container">
@@ -62,6 +62,7 @@
                     <div id="items-table">
                         <strong id="items-heading">Items</strong>
                         <hr>
+                        
                         <div id=items-body>
                             
                         </div>
@@ -85,11 +86,8 @@
                     
                     
                     <table class="table" id="recipes-table">
-                        <thead>
-                            <tr>
-                                <th id="recipes-heading">Recipes</th>
-                            </tr>
-                        </thead>
+                        <strong id="items-heading">Recipes</strong>
+                        <hr>
                         <ul class="nav nav-tabs">
                             <li class="nav-item recipe-tab" >
                                 <a href="#" class="nav-link active" data-recipeTab="all">All</a>
@@ -110,7 +108,7 @@
                                 <a href="#" class="nav-link" data-recipeTab="station">Station</a>
                             </li>
                         </ul>
-                            <tbody id=recipes-body></tbody>
+                            <div id=recipes-body></div>
                     </table>
                 </div>
             </div>

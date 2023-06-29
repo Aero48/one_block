@@ -53,6 +53,7 @@ export function updateRecipes(){
     let unlockedRecipes = [];
     $("#recipes-body").html("");
     let recipeIndex = 0;
+    
 
     // Handles new recipe unlocks
     handRecipes.forEach(recipe =>{
@@ -71,7 +72,6 @@ export function updateRecipes(){
     })
 
     // Handles the display of unlocked recipes
-    console.log(recipeTab);
     unlockedRecipes.forEach(recipe=>{
         if ((recipe.category == recipeTab || recipeTab == "all")&&itemCheck(recipe.inputs)){
             let recipeString = "";
@@ -106,7 +106,8 @@ export function updateRecipes(){
             }
             
             recipeBtn += "<div class='craft-btn'><button class='btn btn-primary craft' data-recipe='"+recipe.id+"'>Craft</button></div>"
-            $("#recipes-body").append("<tr><td><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</tr>")
+            $("#recipes-body").append("<div class='recipe-row'><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</div>");
+            
         }
         
     })
@@ -142,7 +143,7 @@ export function updateRecipes(){
             }else{
                 recipeString += "</div>"
             }
-            $("#recipes-body").append("<tr><td><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</tr>")
+            $("#recipes-body").append("<div class='recipe-row'><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</div")
         }
         
     })

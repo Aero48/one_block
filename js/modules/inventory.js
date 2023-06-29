@@ -1,21 +1,52 @@
-import {itemList} from "../data/items.js";
-import {toolList} from "../data/items.js";
-import {items} from "../data/playerItems.js";
-import {tools} from "../data/playerItems.js";
+import {itemList, toolList} from "../data/items.js";
+import {items, tools, addItem} from "../data/playerItems.js";
 
 import * as itemHandler from "./itemHandler.js";
 
 import { updateRecipes } from "./recipeHandler.js";
 import { updateSieveDisplay } from "./sieveHandler.js";
 import { updateFurnaceDisplay } from "./furnaceHandler.js";
-import { selectItem } from "./itemSelection.js";
+import { selectItem,selectedItem,clearSelectedItem, selectOne, updateSelectedItem } from "./itemSelection.js";
 import { blockDisplay } from "./blockHandler.js";
 
 // Handles inventory item clicks
 function itemClickListeners(){
-    $("#items-body .item-icn").off("click");
-    $("#items-body .item-icn").click(function(){
-        selectItem(this.dataset.index);
+    $("#items-body .item-icn").off("mousedown");
+    $("#items-body .item-icn").mousedown(function(event){
+        switch (event.which) {
+            case 1:
+                selectItem(this.dataset.index);
+                break;
+            case 2:
+                break;
+            case 3:
+                selectOne(this.dataset.index);
+                break;
+            default:
+                console.log("unknown mouse button clicked");
+        }
+        
+    })
+}
+
+function itemDividerListeners(){
+    $("#items-body .item-divider").off("click");
+    $("#items-body .item-divider").mousedown(function(event){
+        switch (event.which) {
+            case 1:
+                addItem(selectedItem, this.dataset.invSlot);
+                clearSelectedItem();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                console.log("unknown mouse button clicked");
+        }
+
+        
+        updateInventory();
     })
 }
 
@@ -23,10 +54,13 @@ function itemClickListeners(){
 export function updateInventory(){
     $("#items-body").html("");
     $("#tools-body").html("");
+    $("#items-body").append("<div class='item-divider' data-invSlot='0'></div>");
     items.forEach((item,index) => {
         itemList.forEach(itemEl => {
             if (item.name == itemEl.name){
+                
                 $("#items-body").append("<div class='item-icn' title='"+itemEl.name+" x"+ item.amount +"' data-index='"+index+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(item.amount)+"</p></div>")
+                $("#items-body").append("<div class='item-divider' data-inv-slot='"+ Number(index+1) +"'></div>");
             }
         })
     })
@@ -38,12 +72,12 @@ export function updateInventory(){
     updateFurnaceDisplay();
     updateRecipes();
     itemClickListeners();
+    itemDividerListeners();
 }
 
 // Removes an item from the array when it reaches an amount of 0
 function itemZeroCheck(){
     for (let i = items.length-1; i>=0; --i){
-        console.log(i)
         if (items[i].amount<1){
             items.splice(i,1)
         }
@@ -84,6 +118,11 @@ export function collectItem(itemStack){
         }
     }
     updateInventory();
+}
+
+export function removeIndex(idx, amount){
+    items[idx].amount -= amount;
+    itemZeroCheck();
 }
 
 // Function for removing a specific amount of items

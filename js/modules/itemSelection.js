@@ -6,6 +6,26 @@ import {items} from "../data/playerItems.js";
 export let selectedItem = {};
 export let itemSelected = false;
 
+export function addSelectedItem(itemStack, amount){
+    selectedItem = {name: itemStack.name, amount: amount};
+    itemSelected = true;
+    updateSelectedItem();
+
+}
+
+export function selectOne(idx){
+    if(!itemSelected || items[idx].name == selectedItem.name){
+        if (itemSelected){
+            selectedItem.amount++;
+        }else{
+            itemSelected = true;
+            selectedItem = {name: items[idx].name, amount: 1, image:items[idx].image, color:items[idx].color};
+        }
+        inventory.removeIndex(idx, 1)
+        inventory.updateInventory();
+        updateSelectedItem();
+    }
+}
 
 // Selects an item that is clicked on in the inventory
 export function selectItem(idx){
@@ -13,7 +33,7 @@ export function selectItem(idx){
         itemSelected = true;
         selectedItem = {name: items[idx].name, amount: items[idx].amount, image:items[idx].image, color:items[idx].color}
         updateSelectedItem();
-        inventory.removeItem(selectedItem.name, selectedItem.amount);
+        inventory.removeIndex(idx, selectedItem.amount);
     }
 }
 

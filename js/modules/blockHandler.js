@@ -84,7 +84,6 @@ function blockMine(){
     // If a specific tool isn't required or the current tool matches the required tool, give the proper loot
     if((!currentMaterial.toolRequired || (currentMaterial.tool == itemHandler.findFastestTool(currentMaterial.tool).type))){
         itemHandler.findFastestTool(currentMaterial.tool).durability-=1;
-        console.log(toolList[2].durability)
         inventory.checkToolDurability();
         processLoot(currentMaterial);
     }

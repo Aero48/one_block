@@ -19,7 +19,6 @@ export function processLoot(material){
                     inventory.collectItem({name: poolItem.name, amount: poolItem.amount})
                 }else if(poolItem.minAmount != null && poolItem.maxAmount != null){
                     let itemRandomRange = Math.ceil(Math.random()*(poolItem.maxAmount - poolItem.minAmount + 1))+(poolItem.minAmount - 1)
-                    console.log(itemRandomRange);
                     inventory.collectItem({name: poolItem.name, amount: itemRandomRange})
                 }else{
                     inventory.collectItem({name: poolItem.name, amount: 1})
