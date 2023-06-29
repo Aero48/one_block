@@ -28,6 +28,7 @@
 .btns-row{
     display: flex;
     justify-content: space-between;
+
 }
 
 #add-selected-item {
@@ -72,7 +73,7 @@
 }
 
 #recipes-body {
-    max-height: 400px !important;
+    height: 70vh !important;
     overflow-y: scroll;
 }
 
