@@ -1,6 +1,6 @@
 // TODO planks to tool handle
 import * as inventory from "./modules/inventory.js";
-import {addSelectedClick} from "./modules/itemSelection.js";
+import {addSelectedClick, removeSelectedClick} from "./modules/itemSelection.js";
 import { recipeTabClick } from "./modules/recipeHandler.js";
 import { sieveClick } from "./modules/sieveHandler.js";
 import { furnaceUpdate, furnaceListeners } from "./modules/furnaceHandler.js" ;
@@ -27,6 +27,10 @@ function clickListeners(){
 
     $("#add-selected-item").click(function(){
         addSelectedClick();
+    })
+
+    $("#remove-selected-item").click(function(){
+        removeSelectedClick();
     })
 
     $("#sieve").click(function(){

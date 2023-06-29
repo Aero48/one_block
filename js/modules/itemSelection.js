@@ -64,12 +64,20 @@ export function addSelectedClick(){
     }
 }
 
+// Removes selected item
+export function removeSelectedClick(){
+    if (itemSelected){
+        clearSelectedItem();
+    }
+}
+
 // Clears the selected item
 export function clearSelectedItem(){
     selectedItem = {};
     itemSelected = false;
     $("#drag-item").html("");
     $("#add-selected-item").prop( "disabled", true )
+    $("#remove-selected-item").prop( "disabled", true )
 }
 
 // Updates the html elements for selected item
@@ -77,9 +85,11 @@ export function updateSelectedItem(){
     if (selectedItem.group == "tool"){
         $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+selectedItem.image+"' style='"+selectedItem.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((selectedItem.durability/selectedItem.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((selectedItem.durability/selectedItem.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div>")
         $("#add-selected-item").prop( "disabled", false )
+        $("#remove-selected-item").prop( "disabled", false )
     }else{
         $("#drag-item").html("<div class='item-icn-no-click' title='"+selectedItem.name+"'><img src='"+itemHandler.findItemIcon(selectedItem)+"' style='"+itemHandler.findItemColor(selectedItem)+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(selectedItem.amount)+"</p></div>")
         $("#add-selected-item").prop( "disabled", false )
+        $("#remove-selected-item").prop( "disabled", false )
     }
     
 }
