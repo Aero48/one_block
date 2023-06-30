@@ -211,6 +211,7 @@
     padding: 10px;
     border-radius: 10px;
     z-index: 2;
+    filter: drop-shadow(3px 3px 2px #222);
 }
 
 #item-tooltip p{
@@ -227,4 +228,5 @@
 #item-tooltip img{
     width: 30px;
     height: 30px;
+    
 }
