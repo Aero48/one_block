@@ -174,6 +174,7 @@
     border-radius: 5px;
     position: relative;
     left: -5px;
+    /* pointer-events: none;  */
 }
 
 .item-divider:hover{
@@ -192,4 +193,28 @@
 
 .tool-divider:hover{
     opacity: .3;
+}
+
+#item-tooltip{
+    position: absolute;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+#item-tooltip p{
+    color: white;
+    font-size: 15px;
+    margin-bottom: 0;
+    
+}
+
+#item-tooltip .tooltip-title{
+    font-weight: bold;
+}
+
+#item-tooltip img{
+    width: 30px;
+    height: 30px;
 }

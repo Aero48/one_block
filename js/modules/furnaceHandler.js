@@ -2,6 +2,7 @@ import * as itemHandler from "./itemHandler.js";
 import * as inventory from "./inventory.js";
 import { itemSelected, selectedItem, updateSelectedItem, clearSelectedItem, addSelectedItem } from "./itemSelection.js";
 import { fuel, smeltables } from "../data/fuel.js";
+import { hideTooltip, showItemTooltip } from "./tooltipHandler.js";
 
 let furnaceTemp = 0;
 let furnaceGoalTemp = 0;
@@ -55,13 +56,39 @@ function emptyFurnace(){
     furnaceHeatBarColor();
 }
 
+function furnaceHoverListeners(){
+    $("#furnace-fuel").off("mouseenter");
+    $("#furnace-fuel").mouseenter(function(){
+        if (furnaceFuel.name != null){
+            showItemTooltip(furnaceFuel);
+        }
+        
+    })
+    $("#furnace-fuel").off("mouseleave");
+    $("#furnace-fuel").mouseleave(function(){
+        hideTooltip();
+    })
+
+    $("#furnace-input").off("mouseenter");
+    $("#furnace-input").mouseenter(function(){
+        if (furnaceInput.name != null){
+            showItemTooltip(furnaceInput);
+        }
+        
+    })
+    $("#furnace-input").off("mouseleave");
+    $("#furnace-input").mouseleave(function(){
+        hideTooltip();
+    })
+}
+
 function updateFurnace(){
     if (furnaceFuel.amount<1 || furnaceFuel.name == null) {
         furnaceFuel = {};
         $("#furnace-fuel").html("");
         
     }else{
-        $("#furnace-fuel").html("<div class='item-icn' title='"+furnaceFuel.name+"'><img src='"+furnaceFuel.image+"' style='"+furnaceFuel.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(furnaceFuel.amount)+"</p></div>");
+        $("#furnace-fuel").html("<div class='item-icn'><img src='"+furnaceFuel.image+"' style='"+furnaceFuel.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(furnaceFuel.amount)+"</p></div>");
     }
     
     if (!isHeating && furnaceFuel.name != null){
@@ -83,7 +110,7 @@ function updateFurnace(){
         $("#furnace-input").html("");
         
     }else{
-        $("#furnace-input").html("<div class='item-icn' title='"+furnaceInput.name+"'><img src='"+furnaceInput.image+"' style='"+furnaceInput.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(furnaceInput.amount)+"</p></div>");
+        $("#furnace-input").html("<div class='item-icn'><img src='"+furnaceInput.image+"' style='"+furnaceInput.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(furnaceInput.amount)+"</p></div>");
     }
 
     if (!isSmelting && furnaceInput.name != null){
@@ -99,6 +126,8 @@ function updateFurnace(){
         })
         
     }
+
+    furnaceHoverListeners();
 }
 
 // Adds fuel to the furnace input slot

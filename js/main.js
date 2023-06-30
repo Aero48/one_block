@@ -5,6 +5,8 @@ import { recipeTabClick } from "./modules/recipeHandler.js";
 import { sieveClick } from "./modules/sieveHandler.js";
 import { furnaceUpdate, furnaceListeners } from "./modules/furnaceHandler.js" ;
 import { randomBlock, blockClick } from "./modules/blockHandler.js";
+import { importLocalStorage } from "./modules/localStorage.js";
+import { hideTooltip } from "./modules/tooltipHandler.js";
 
 
 let dragItem = document.getElementById('drag-item');const onMouseMove = (e) =>{
@@ -12,6 +14,12 @@ let dragItem = document.getElementById('drag-item');const onMouseMove = (e) =>{
     dragItem.style.top = e.pageY + 'px';
   }
 document.addEventListener('mousemove', onMouseMove);
+
+let dragTooltip = document.getElementById('item-tooltip');const onCursorMove = (e) =>{
+    dragTooltip.style.left = Number(e.pageX+25) + 'px';
+    dragTooltip.style.top = Number(e.pageY+25) + 'px';
+  }
+document.addEventListener('mousemove', onCursorMove);
 
 
 function clickListeners(){
@@ -43,9 +51,11 @@ function clickListeners(){
 
 $(document).ready(function(){
     randomBlock("overworld");
+    importLocalStorage();
+    
     inventory.updateInventory();
     clickListeners();
-
+    
     
     const furnaceInterval = setInterval(furnaceUpdate, 1000);
 });

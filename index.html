@@ -14,6 +14,13 @@
 <body oncontextmenu="return false;">
     <div id="drag-item" >
     </div>
+    <div id="item-tooltip">
+        <p class="tooltip-title">Raw Copper</p>
+        <div class="tooltip-body">
+            <p class="tooltip-description">Requires heat level: <img src="images/fire-svgrepo-com.svg"></p>
+        </div>
+        
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -86,6 +93,7 @@
                     </table>
                     
                 </div>
+                
             </div>
             <div class="col-md-4">
                 <div class="crafting-hand">
@@ -136,5 +144,7 @@
     <script src="./js/modules/sieveHandler.js" type="module"></script>
     <script src="./js/modules/furnaceHandler.js" type="module"></script>
     <script src="./js/modules/blockHandler.js" type="module"></script>
+    <script src="./js/modules/localStorage.js" type="module"></script>
+    <script src="./js/modules/tooltipHandler.js" type="module"></script>
 </body>
 </html>

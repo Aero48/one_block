@@ -6,8 +6,30 @@ import * as itemHandler from "./itemHandler.js";
 import { updateRecipes } from "./recipeHandler.js";
 import { updateSieveDisplay } from "./sieveHandler.js";
 import { updateFurnaceDisplay } from "./furnaceHandler.js";
-import { selectItem,selectedItem,clearSelectedItem, selectOne, updateSelectedItem, selectTool } from "./itemSelection.js";
+import { selectItem,selectedItem,clearSelectedItem, selectOne, updateSelectedItem, selectTool, itemSelected } from "./itemSelection.js";
 import { blockDisplay } from "./blockHandler.js";
+import { updateLocalStorage } from "./localStorage.js";
+import { hideTooltip, showItemTooltip } from "./tooltipHandler.js";
+
+function itemHoverListeners(){
+    $("#items-body .item-icn").off("mouseenter");
+    $("#items-body .item-icn").mouseenter(function(){
+        showItemTooltip(items[this.dataset.index]);
+    })
+    $("#items-body .item-icn").off("mouseleave");
+    $("#items-body .item-icn").mouseleave(function(){
+        hideTooltip();
+    })
+
+    $("#tools-body .item-icn").off("mouseenter");
+    $("#tools-body .item-icn").mouseenter(function(){
+        showItemTooltip(tools[this.dataset.index]);
+    })
+    $("#tools-body .item-icn").off("mouseleave");
+    $("#tools-body .item-icn").mouseleave(function(){
+        hideTooltip();
+    }) 
+}
 
 // Handles inventory item clicks
 function itemClickListeners(){
@@ -33,6 +55,12 @@ function itemClickListeners(){
 }
 
 function itemDividerListeners(){
+    if (!itemSelected){
+        $("#items-body .item-divider").css("pointer-events", "none");
+    }else{
+        $("#items-body .item-divider").css("pointer-events", "auto");
+    }
+
     $("#items-body .item-divider").off("mousedown");
     $("#items-body .item-divider").mousedown(function(event){
         console.log(this.dataset.invSlot)
@@ -58,6 +86,13 @@ function itemDividerListeners(){
 }
 
 function toolDividerListeners(){
+
+    if (!itemSelected){
+        $("#tools-body .tool-divider").css("pointer-events", "none");
+    }else{
+        $("#tools-body .tool-divider").css("pointer-events", "auto");
+    }
+
     $("#tools-body .tool-divider").off("mousedown");
     $("#tools-body .tool-divider").mousedown(function(event){
         if (selectedItem.group == "tool"){
@@ -91,13 +126,13 @@ export function updateInventory(){
         itemList.forEach(itemEl => {
             if (item.name == itemEl.name){
                 
-                $("#items-body").append("<div class='item-icn' title='"+itemEl.name+" x"+ item.amount +"' data-index='"+index+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(item.amount)+"</p></div>")
+                $("#items-body").append("<div class='item-icn' data-index='"+index+"'><img src='"+itemEl.image+"' style='"+itemEl.color+"' ><p class='item-icn-amount'>"+itemHandler.itemAmountIndicator(item.amount)+"</p></div>")
                 $("#items-body").append("<div class ='divider-container'> <div class='item-divider' data-inv-slot='"+ Number(index+1) +"'></div></div>");
             }
         })
     })
     tools.forEach((tool,index) => {
-        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' title='"+tool.name+": "+ tool.durability + "/" + tool.maxDurability + "' data-index='"+index+"'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
+        $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' data-index='"+index+"'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
         $("#tools-body").append("<div class ='divider-container'><div class='tool-divider' data-inv-slot='"+ Number(index+1) +"'></div></div>");
     })
 
@@ -107,6 +142,10 @@ export function updateInventory(){
     itemClickListeners();
     itemDividerListeners();
     toolDividerListeners();
+    itemHoverListeners();
+    hideTooltip();
+    updateLocalStorage(items, tools);
+
 }
 
 // Removes an item from the array when it reaches an amount of 0

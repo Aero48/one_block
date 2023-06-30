@@ -6,10 +6,33 @@ export function addTool(itemStack, idx){
     tools.splice(idx, 0, itemStack);
 }
 
-export const items = [
-    
+export function setItems(itemsImport){
+    items = JSON.parse(itemsImport);
+}
+
+export function setTools(toolsImport){
+    tools = JSON.parse(toolsImport);
+}
+
+export let items = [
+    {
+        name: "Coal",
+        amount: 5
+    },
+    {
+        name: "Raw Copper",
+        amount: 5
+    },
+    {
+        name: "Bronze Blend",
+        amount: 5
+    },
+    {
+        name: "Gravel",
+        amount: 5
+    }
 ];
-export const tools = [
+export let tools = [
     {
         name: "Flint Shovel",
         image: "./images/shovel-svgrepo-com.svg",
@@ -17,6 +40,16 @@ export const tools = [
         group: "tool",
         type: "shovel",
         power: 0.2,
+        maxDurability: 20,
+        durability: 20
+    },
+    {
+        name: "Brick Furnace",
+        image: "./images/furnace-svgrepo-com.svg",
+        color: "filter: invert(9%) sepia(77%) saturate(3803%) hue-rotate(336deg) brightness(84%) contrast(102%);",
+        group: "tool",
+        type: "furnace",
+        power: 2,
         maxDurability: 20,
         durability: 20
     },
