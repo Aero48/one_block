@@ -125,7 +125,7 @@ function dividerItemSelectedCheck(){
 export function updateInventory(){
     $("#items-body").html("");
     $("#tools-body").html("");
-    $("#items-body").append("<div class ='divider-container'><div class='item-divider' data-invSlot='0'></div></div>");
+    $("#items-body").append("<div class ='divider-container' style='width: 0'><div class='item-divider' data-invSlot='0'></div></div>");
     $("#tools-body").append("<div class ='divider-container'><div class='tool-divider' data-invSlot='0'></div></div>");
     items.forEach((item,index) => {
         itemList.forEach(itemEl => {

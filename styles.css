@@ -30,6 +30,10 @@
     margin-bottom: 10px;
 }
 
+#items-body .item-icn{
+    margin-bottom: 10px;
+}
+
 #tools-body {
     display: flex;
     flex-wrap: wrap;
@@ -44,7 +48,6 @@
 #add-selected-item {
     height: 50px;
     width: 50px;
-    margin-left: 10px;
     background-color: transparent;
     border-width: 4px;
     color: black;
