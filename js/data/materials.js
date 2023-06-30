@@ -127,15 +127,6 @@ export const materials = new Map([
                                 maxAmount: 1
                             }
                         ]
-                    },
-                    {
-                        poolWeight: 1,
-                        poolItems: [
-                            {
-                                name: "Apple",
-                                amount: 1
-                            }
-                        ]
                     }
                 ]
             }

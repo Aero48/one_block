@@ -166,6 +166,7 @@ export function updateRecipes(){
             }else{
                 recipeString += "</div>"
             }
+            recipeBtn += "<div class='craft-btn'><button class='btn btn-secondary' data-recipe='"+recipe.id+"' disabled>Craft</button></div>"
             $("#recipes-body").append("<div class='recipe-row'><div class='recipe-content'>"+ recipeString + "</div>" + recipeBtn + "</div")
         }
         

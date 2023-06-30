@@ -647,7 +647,7 @@ export const handRecipes = [
             },
             {
                 name: "Copper Ingot",
-                amount: 4
+                amount: 2
             },
             {
                 name: "Weak Tool Handle",

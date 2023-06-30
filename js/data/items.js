@@ -150,8 +150,8 @@ export const toolList = [
         group: "tool",
         type: "shovel",
         power: 0.2,
-        maxDurability: 20,
-        durability: 20
+        maxDurability: 25,
+        durability: 25
     },
     {
         name: "Flint Sickle",
@@ -160,8 +160,8 @@ export const toolList = [
         group: "tool",
         type: "sickle",
         power: 0.2,
-        maxDurability: 20,
-        durability: 20
+        maxDurability: 25,
+        durability: 25
     },
     {
         name: "Flint Saw",
@@ -248,8 +248,8 @@ export const toolList = [
         group: "tool",
         type: "shovel",
         power: 0.3,
-        maxDurability: 40,
-        durability: 40
+        maxDurability: 50,
+        durability: 50
     },
     {
         name: "Copper Sickle",
@@ -258,8 +258,8 @@ export const toolList = [
         group: "tool",
         type: "sickle",
         power: 0.3,
-        maxDurability: 40,
-        durability: 40
+        maxDurability: 50,
+        durability: 50
     },
     {
         name: "Copper Saw",
@@ -306,8 +306,8 @@ export const toolList = [
         group: "tool",
         type: "shovel",
         power: 0.4,
-        maxDurability: 60,
-        durability: 60
+        maxDurability: 75,
+        durability: 75
     },
     {
         name: "Bronze Sickle",
@@ -316,8 +316,8 @@ export const toolList = [
         group: "tool",
         type: "sickle",
         power: 0.4,
-        maxDurability: 60,
-        durability: 60
+        maxDurability: 75,
+        durability: 75
     },
     {
         name: "Bronze Saw",
