@@ -5,7 +5,7 @@ import { recipeTabClick } from "./modules/recipeHandler.js";
 import { sieveClick } from "./modules/sieveHandler.js";
 import { furnaceUpdate, furnaceListeners } from "./modules/furnaceHandler.js" ;
 import { randomBlock, blockClick } from "./modules/blockHandler.js";
-import { importLocalStorage } from "./modules/localStorage.js";
+import { importLocalStorage, clearLocalStorage } from "./modules/localStorage.js";
 import { hideTooltip } from "./modules/tooltipHandler.js";
 
 
@@ -20,7 +20,6 @@ let dragTooltip = document.getElementById('item-tooltip');const onCursorMove = (
     dragTooltip.style.top = Number(e.pageY+25) + 'px';
   }
 document.addEventListener('mousemove', onCursorMove);
-
 
 function clickListeners(){
     $("#block").click(function(){
@@ -46,6 +45,10 @@ function clickListeners(){
     })
 
     furnaceListeners();
+
+    $("#reset-game").click(function(){
+        clearLocalStorage();
+    })
     
 }
 

@@ -14,3 +14,8 @@ export function importLocalStorage(){
     }
     
 }
+
+export function clearLocalStorage(){
+    localStorage.clear();
+    location.reload();
+}
