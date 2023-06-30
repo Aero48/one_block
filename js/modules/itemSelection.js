@@ -60,6 +60,7 @@ export function addSelectedClick(){
             inventory.collectItem({name: selectedItem.name, amount: selectedItem.amount})
             clearSelectedItem();
         }
+        inventory.updateInventory();
         
     }
 }
@@ -68,6 +69,7 @@ export function addSelectedClick(){
 export function removeSelectedClick(){
     if (itemSelected){
         clearSelectedItem();
+        inventory.updateInventory();
     }
 }
 

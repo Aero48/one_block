@@ -55,11 +55,6 @@ function itemClickListeners(){
 }
 
 function itemDividerListeners(){
-    if (!itemSelected){
-        $("#items-body .item-divider").css("pointer-events", "none");
-    }else{
-        $("#items-body .item-divider").css("pointer-events", "auto");
-    }
 
     $("#items-body .item-divider").off("mousedown");
     $("#items-body .item-divider").mousedown(function(event){
@@ -87,11 +82,7 @@ function itemDividerListeners(){
 
 function toolDividerListeners(){
 
-    if (!itemSelected){
-        $("#tools-body .tool-divider").css("pointer-events", "none");
-    }else{
-        $("#tools-body .tool-divider").css("pointer-events", "auto");
-    }
+    
 
     $("#tools-body .tool-divider").off("mousedown");
     $("#tools-body .tool-divider").mousedown(function(event){
@@ -114,6 +105,20 @@ function toolDividerListeners(){
         }
         
     })
+}
+
+function dividerItemSelectedCheck(){
+    if (!itemSelected){
+        $("#items-body .item-divider").css("pointer-events", "none");
+    }else{
+        $("#items-body .item-divider").css("pointer-events", "auto");
+    }
+
+    if (!itemSelected){
+        $("#tools-body .tool-divider").css("pointer-events", "none");
+    }else{
+        $("#tools-body .tool-divider").css("pointer-events", "auto");
+    }
 }
 
 // Refreshes the view of the inventory
@@ -145,7 +150,7 @@ export function updateInventory(){
     itemHoverListeners();
     hideTooltip();
     updateLocalStorage(items, tools);
-
+    dividerItemSelectedCheck();
 }
 
 // Removes an item from the array when it reaches an amount of 0
