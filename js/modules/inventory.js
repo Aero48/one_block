@@ -126,7 +126,7 @@ export function updateInventory(){
     $("#items-body").html("");
     $("#tools-body").html("");
     $("#items-body").append("<div class ='divider-container' style='width: 0'><div class='item-divider' data-invSlot='0'></div></div>");
-    $("#tools-body").append("<div class ='divider-container'><div class='tool-divider' data-invSlot='0'></div></div>");
+    $("#tools-body").append("<div class ='divider-container' style='width: 0'><div class='tool-divider' data-invSlot='0'></div></div>");
     items.forEach((item,index) => {
         itemList.forEach(itemEl => {
             if (item.name == itemEl.name){
@@ -138,7 +138,7 @@ export function updateInventory(){
     })
     tools.forEach((tool,index) => {
         $("#tools-body").append("<tr><td><div class='item-icn' style='height: 60px' data-index='"+index+"'><img src='"+tool.image+"' style='"+tool.color+"' ><div class='progress' style='height:6px'><div class='tool-progress progress-bar' class='progress-bar bg-danger' role='progressbar' style='width: "+Math.floor((tool.durability/tool.maxDurability)*100)+"%' aria-valuenow='"+Math.floor((tool.durability/tool.maxDurability))+"' aria-valuemin='0' aria-valuemax='100'></div></div></div></td></tr>")
-        $("#tools-body").append("<div class ='divider-container'><div class='tool-divider' data-inv-slot='"+ Number(index+1) +"'></div></div>");
+        $("#tools-body").append("<div class ='divider-container' ><div class='tool-divider' data-inv-slot='"+ Number(index+1) +"'></div></div>");
     })
 
     updateSieveDisplay();

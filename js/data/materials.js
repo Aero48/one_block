@@ -33,7 +33,8 @@ export const materials = new Map([
                         poolItems: [
                             {
                                 name: "Gravel",
-                                amount: 1
+                                minAmount: 1,
+                                maxAmount: 2
                             }
                         ]
                     },
@@ -62,7 +63,8 @@ export const materials = new Map([
                         poolItems: [
                             {
                                 name: "Cobblestone",
-                                amount: 1
+                                minAmount: 1,
+                                maxAmount: 2
                             }
                         ]
                     }
